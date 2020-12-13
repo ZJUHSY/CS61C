@@ -19,6 +19,7 @@ const char* IGNORE_CHARS = " \f\n\r\t\v,()";
 /* You should not be calling this function yourself. */
 static void raise_label_error(uint32_t input_line, const char* label) {
     write_to_log("Error - invalid label at line %d: %s\n", input_line, label);
+    // test git functions
 }
 
 /* Call this function if more than MAX_ARGS arguments are found while parsing
