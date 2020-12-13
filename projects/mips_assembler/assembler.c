@@ -121,7 +121,53 @@ static int add_if_label(uint32_t input_line, char* str, uint32_t byte_offset,
  */
 int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
     /* YOUR CODE HERE */
-    return -1;
+    uint32_t line_number = 1;
+    uint32_t byte_offset = 0;
+    char buf[BUF_SIZE];
+    char* saved_copy = malloc(1);
+    char* args[MAX_ARGS];
+    int global_err = 0;
+    int num_args = 0;
+    int res = 0;
+    while(fgets(buf, BUF_SIZE, input)){
+        skip_comment(buf);
+        if(strlen(buf)==0){
+            line_number ++ ;
+            continue;
+        }
+        char* next_line = strtok(buf, IGNORE_CHARS);
+        res = add_if_label(line_number, next_line, byte_offset + 4, symtbl);
+        if(res < 0){
+            global_err = -1;
+        }
+        next_line = strtok(NULL, IGNORE_CHARS);
+        saved_copy = realloc(next_line, strlen(next_line)+1);
+        strcpy(saved_copy, next_line);
+        num_args = 0;
+        next_line = strtok(NULL, IGNORE_CHARS);
+
+        while(next_line){
+            if(num_args > MAX_ARGS){
+                raise_extra_arg_error(line_number, next_line);
+                global_err = -1;
+                break;
+            }
+            args[num_args++] = next_line;
+            next_line = strtok(NULL, IGNORE_CHARS);
+        }
+        if(global_err >= 0){
+            res = write_pass_one(output, saved_copy, args, num_args);
+            if(res == 0){
+                raise_inst_error(line_number, saved_copy, args, num_args);
+                global_err = -1;
+            }
+        }
+        line_number ++;
+        byte_offset += 4;
+    }
+    //write_pass_one()
+    free(saved_copy);
+    return global_err;
 }
 
 /* Reads an intermediate file and translates it into machine code. You may assume:
@@ -137,27 +183,46 @@ int pass_two(FILE *input, FILE* output, SymbolTable* symtbl, SymbolTable* reltbl
     /* YOUR CODE HERE */
 
     // Since we pass this buffer to strtok(), the chars here will GET CLOBBERED.
+    int raise_err = 0;
     char buf[BUF_SIZE];
     // Store input line number / byte offset below. When should each be incremented?
-
-    // First, read the next line into a buffer.
-
-    // Next, use strtok() to scan for next character. If there's nothing,
-    // go to the next line.
-
-    // Parse for instruction arguments. You should use strtok() to tokenize
-    // the rest of the line. Extra arguments should be filtered out in pass_one(),
-    // so you don't need to worry about that here.
+    uint32_t line_number = 1;
+    uint32_t offset = 0;
     char* args[MAX_ARGS];
     int num_args = 0;
+    char* saved_copy = malloc(1);
+    // First, read the next line into a buffer.
+    while(fgets(buf, BUF_SIZE, input)){
 
-    // Use translate_inst() to translate the instruction and write to output file.
-    // If an error occurs, the instruction will not be written and you should call
-    // raise_inst_error(). 
+        // Next, use strtok() to scan for next character. If there's nothing,
+        // go to the next line.
+        char* next_line = strtok(buf, IGNORE_CHARS);
+        saved_copy = realloc(next_line, strlen(next_line)+1);
+        strcpy(saved_copy, next_line);
+        // Parse for instruction arguments. You should use strtok() to tokenize
+        // the rest of the line. Extra arguments should be filtered out in pass_one(),
+        // so you don't need to worry about that here.
+        next_line = strtok(NULL, IGNORE_CHARS);
+        num_args = 0;
+        while(next_line){
+            args[num_args++] = next_line;
+            strtok(NULL, IGNORE_CHARS);
+        }
 
-    // Repeat until no more characters are left, and the return the correct return val
-
-    return -1;
+        // Use translate_inst() to translate the instruction and write to output file.
+        // If an error occurs, the instruction will not be written and you should call
+        // raise_inst_error(). 
+        int res = translate_inst(output, saved_copy, args, num_args, offset, symtbl, reltbl);
+        // Repeat until no more characters are left, and the return the correct return val
+        if(res < 0){
+            raise_err = -1;
+            raise_inst_error(line_number, saved_copy, args, num_args);
+        }
+        line_number ++;
+        offset += 4;
+    }
+    free(saved_copy);
+    return raise_err>=0 ? 0:-1;
 }
 
 /*******************************
