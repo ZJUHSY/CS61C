@@ -8,8 +8,12 @@
 #include "src/translate.h"
 #include "assembler.h"
 
-const int MAX_ARGS = 3;
-const int BUF_SIZE = 1024;
+#define MAX_ARGS 3
+// const int MAX_ARGS = 3;
+#define BUF_SIZE 1024
+// const int BUF_SIZE = 1024;
+#define MAX_LABEL_SIZE 500
+#define MAX_INS_SIZE 100
 const char* IGNORE_CHARS = " \f\n\r\t\v,()";
 
 /*******************************
@@ -75,7 +79,9 @@ static int add_if_label(uint32_t input_line, char* str, uint32_t byte_offset,
     SymbolTable* symtbl) {
     
     size_t len = strlen(str);
+    // printf("len：%d\n", len);
     if (str[len - 1] == ':') {
+        // printf("not empty!\n");
         str[len - 1] = '\0';
         if (is_valid_label(str)) {
             if (add_to_table(symtbl, str, byte_offset) == 0) {
@@ -125,49 +131,79 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
     uint32_t line_number = 1;
     uint32_t byte_offset = 0;
     char buf[BUF_SIZE];
-    char* saved_copy = malloc(1);
     char* args[MAX_ARGS];
     int global_err = 0;
     int num_args = 0;
     int res = 0;
+    int add_label = 0;
+    char cur_label[MAX_LABEL_SIZE];
+    char name[MAX_INS_SIZE];
     while(fgets(buf, BUF_SIZE, input)){
+        int tmp_err = 0;
+        line_number ++ ;
+        printf("new line\n");
         skip_comment(buf);
         if(strlen(buf)==0){
-            line_number ++ ;
             continue;
         }
-        char* next_line = strtok(buf, IGNORE_CHARS);
-        res = add_if_label(line_number, next_line, byte_offset + 4, symtbl);
-        if(res < 0){
-            global_err = -1;
+        
+        char* first_word = strtok(buf, IGNORE_CHARS);
+        if(first_word==NULL){
+            continue;
         }
-        next_line = strtok(NULL, IGNORE_CHARS);
-        saved_copy = realloc(next_line, strlen(next_line)+1);
-        strcpy(saved_copy, next_line);
-        num_args = 0;
-        next_line = strtok(NULL, IGNORE_CHARS);
+        byte_offset += 4;
+        if(!add_label){
+            strcpy(cur_label, first_word);
+            add_label = 1;
+        }
+        printf("%s\n", first_word);
+        char* next_line = strtok(NULL, IGNORE_CHARS);
+        if(next_line==NULL){
+            continue;
+        }
+        printf("%s\n", next_line);
+        res = add_if_label(line_number, cur_label, byte_offset, symtbl);
+        add_label = 0;
 
-        while(next_line){
+        num_args = 0;
+        if(res == 0 || strcmp(cur_label, first_word) != 0){
+            strcpy(name, first_word);
+            args[num_args++] = next_line;
+        }
+        else{
+            strcpy(name, next_line);
+        }
+        int count = 0;
+        while(1){
+            count += 1;
+            // printf("count: %d\n", count);
             if(num_args > MAX_ARGS){
                 raise_extra_arg_error(line_number, next_line);
-                global_err = -1;
+                tmp_err = -1;
                 break;
             }
-            args[num_args++] = next_line;
             next_line = strtok(NULL, IGNORE_CHARS);
-        }
-        if(global_err >= 0){
-            res = write_pass_one(output, saved_copy, args, num_args);
-            if(res == 0){
-                raise_inst_error(line_number, saved_copy, args, num_args);
-                global_err = -1;
+            printf("params %d: %s\n", num_args, next_line);
+            if(next_line==NULL){
+                break;
+            }
+            else{
+                args[num_args++] = next_line;
             }
         }
-        line_number ++;
-        byte_offset += 4;
+        printf("out break");
+        if(tmp_err >= 0){
+            res = write_pass_one(output, name, args, num_args);
+            if(res == 0){
+                raise_inst_error(line_number, name, args, num_args);
+                tmp_err = -1;
+            }
+        }
+        // line_number ++;
+        // byte_offset += 4;
+        global_err = tmp_err < 0 ? -1 : 0;
     }
     //write_pass_one()
-    free(saved_copy);
     return global_err;
 }
 
@@ -187,7 +223,7 @@ int pass_two(FILE *input, FILE* output, SymbolTable* symtbl, SymbolTable* reltbl
     int raise_err = 0;
     char buf[BUF_SIZE];
     // Store input line number / byte offset below. When should each be incremented?
-    uint32_t line_number = 1;
+    uint32_t line_number = 0;
     uint32_t offset = 0;
     char* args[MAX_ARGS];
     int num_args = 0;
@@ -198,7 +234,7 @@ int pass_two(FILE *input, FILE* output, SymbolTable* symtbl, SymbolTable* reltbl
         // Next, use strtok() to scan for next character. If there's nothing,
         // go to the next line.
         char* next_line = strtok(buf, IGNORE_CHARS);
-        saved_copy = realloc(next_line, strlen(next_line)+1);
+        saved_copy = realloc(saved_copy, strlen(next_line)+1);
         strcpy(saved_copy, next_line);
         // Parse for instruction arguments. You should use strtok() to tokenize
         // the rest of the line. Extra arguments should be filtered out in pass_one(),
