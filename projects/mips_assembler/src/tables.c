@@ -6,6 +6,8 @@
 #include "utils.h"
 #include "tables.h"
 
+#define MAX_LABEL_SIZE 100
+
 const int SYMTBL_NON_UNIQUE = 0;
 const int SYMTBL_UNIQUE_NAME = 1;
 
@@ -47,6 +49,14 @@ SymbolTable* create_table(int mode) {
         allocation_failed();
         return NULL;
     }
+    // for(int i = 0; i < INITIAL_SIZE; i++){
+    //     symbol->name = malloc(sizeof(MAX_LABEL_SIZE));
+    //     if(!symbol->name){
+    //         allocation_failed();
+    //         return NULL;
+    //     }
+    //     symbol ++ ;
+    // }
     SymbolTable* res = (SymbolTable*)malloc(sizeof(SymbolTable));
     if(!res){
         allocation_failed();
@@ -87,7 +97,8 @@ void free_table(SymbolTable* table) {
  */
 int add_to_table(SymbolTable* table, const char* name, uint32_t addr) {
     /* YOUR CODE HERE */
-    if(_check_name_exists(table, name) && table->mode){
+    // printf("%d\n", table->len);
+    if(_check_name_exists(table, name) && table->mode==1){
         name_already_exists(name);
         return -1;
     }
@@ -108,15 +119,27 @@ int add_to_table(SymbolTable* table, const char* name, uint32_t addr) {
         allocation_failed();
         return -1;
     }
+    // table->len += 1;
+    Symbol* symbol = table->tbl;
+    for(int i = 0; i < table->len; i++){
+        // printf("1\n");
+        symbol++;
+    }
+    // printf("out\n");
+    symbol->addr = addr;
+    // symbol-> name = (char*)malloc(sizeof(MAX_LABEL_SIZE));
+    strcpy(copy_name, name);
+    symbol -> name = copy_name;
+    // printf("%s\n", symbol->name);
     table->len += 1;
-    table->tbl[table->len-1].addr = addr;
-    table->tbl[table->len-1].name = copy_name;
+    // table->tbl[table->len-1].name = copy_name;
     return 0;
 }
 
 int _check_name_exists(SymbolTable* table, const char* name){
     Symbol* symbol = table->tbl;
     for(int i = 0;i < table->len; i++){
+        printf("%s\t%s\n", symbol -> name, name);
         if(strcmp(symbol->name,name) == 0){
             return 1;
         }

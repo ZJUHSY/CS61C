@@ -128,7 +128,8 @@ static int add_if_label(uint32_t input_line, char* str, uint32_t byte_offset,
  */
 int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
     /* YOUR CODE HERE */
-    uint32_t line_number = 1;
+    uint32_t line_number = 0;
+    uint32_t label_line = 0;
     uint32_t byte_offset = 0;
     char buf[BUF_SIZE];
     char* args[MAX_ARGS];
@@ -154,6 +155,7 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
         byte_offset += 4;
         if(!add_label){
             strcpy(cur_label, first_word);
+            label_line = line_number;
             add_label = 1;
         }
         printf("%s\n", first_word);
@@ -162,26 +164,24 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
             continue;
         }
         printf("%s\n", next_line);
-        res = add_if_label(line_number, cur_label, byte_offset, symtbl);
+        res = add_if_label(label_line, cur_label, byte_offset, symtbl);
         add_label = 0;
 
         num_args = 0;
-        if(res == 0 || strcmp(cur_label, first_word) != 0){
+        // cur_label[strlen(cur_label)] = ':';
+        char * tmp = malloc(sizeof(first_word) + 1);
+        strcpy(tmp, first_word);
+        tmp[strlen(tmp) - 1] = '\0';
+        if(res == 0 || strcmp(cur_label, tmp) != 0){
+            printf("%s\t%s\n", cur_label, tmp);
             strcpy(name, first_word);
             args[num_args++] = next_line;
         }
         else{
             strcpy(name, next_line);
         }
-        int count = 0;
+        free(tmp);
         while(1){
-            count += 1;
-            // printf("count: %d\n", count);
-            if(num_args > MAX_ARGS){
-                raise_extra_arg_error(line_number, next_line);
-                tmp_err = -1;
-                break;
-            }
             next_line = strtok(NULL, IGNORE_CHARS);
             printf("params %d: %s\n", num_args, next_line);
             if(next_line==NULL){
@@ -189,6 +189,11 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
             }
             else{
                 args[num_args++] = next_line;
+            }
+            if(num_args > MAX_ARGS){
+                raise_extra_arg_error(line_number, next_line);
+                tmp_err = -1;
+                break;
             }
         }
         printf("out break");
@@ -201,7 +206,7 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
         }
         // line_number ++;
         // byte_offset += 4;
-        global_err = tmp_err < 0 ? -1 : 0;
+        global_err = tmp_err < 0 ? -1 : global_err;
     }
     //write_pass_one()
     return global_err;
