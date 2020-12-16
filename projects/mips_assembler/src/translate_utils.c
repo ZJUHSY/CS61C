@@ -61,11 +61,12 @@ int translate_num(long int* output, const char* str, long int lower_bound,
     /* YOUR CODE HERE */
     char* end_str;
     long int res = strtol(str, &end_str,0);
-    if((res<=upper_bound && res>=lower_bound && res!=0L && *end_str=='\0') || *str=='0'){
+
+    if((res <= upper_bound && res >= lower_bound && res != 0L && *end_str == '\0') || (strcmp(str, "0") == 0) ){
         *output = res;
         return 0;
     }
-        return -1;
+    return -1;
 }
 
 /* Translates the register name to the corresponding register number. Please

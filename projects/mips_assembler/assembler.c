@@ -136,13 +136,13 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
     int global_err = 0;
     int num_args = 0;
     int res = 0;
-    int add_label = 0;
+    int add_label = -4;
     char cur_label[MAX_LABEL_SIZE];
     char name[MAX_INS_SIZE];
     while(fgets(buf, BUF_SIZE, input)){
         int tmp_err = 0;
         line_number ++ ;
-        printf("new line\n");
+        // printf("new line\n");
         skip_comment(buf);
         if(strlen(buf)==0){
             continue;
@@ -158,12 +158,12 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
             label_line = line_number;
             add_label = 1;
         }
-        printf("%s\n", first_word);
+        // printf("%s\n", first_word);
         char* next_line = strtok(NULL, IGNORE_CHARS);
         if(next_line==NULL){
             continue;
         }
-        printf("%s\n", next_line);
+        // printf("%s\n", next_line);
         res = add_if_label(label_line, cur_label, byte_offset, symtbl);
         add_label = 0;
 
@@ -173,7 +173,7 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
         strcpy(tmp, first_word);
         tmp[strlen(tmp) - 1] = '\0';
         if(res == 0 || strcmp(cur_label, tmp) != 0){
-            printf("%s\t%s\n", cur_label, tmp);
+            // printf("%s\t%s\n", cur_label, tmp);
             strcpy(name, first_word);
             args[num_args++] = next_line;
         }
@@ -183,7 +183,7 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
         free(tmp);
         while(1){
             next_line = strtok(NULL, IGNORE_CHARS);
-            printf("params %d: %s\n", num_args, next_line);
+            // printf("params %d: %s\n", num_args, next_line);
             if(next_line==NULL){
                 break;
             }
@@ -196,7 +196,7 @@ int pass_one(FILE* input, FILE* output, SymbolTable* symtbl) {
                 break;
             }
         }
-        printf("out break");
+        // printf("out break");
         if(tmp_err >= 0){
             res = write_pass_one(output, name, args, num_args);
             if(res == 0){
@@ -225,10 +225,11 @@ int pass_two(FILE *input, FILE* output, SymbolTable* symtbl, SymbolTable* reltbl
     /* YOUR CODE HERE */
 
     // Since we pass this buffer to strtok(), the chars here will GET CLOBBERED.
+    // printf("enter pass two\n");
     int raise_err = 0;
     char buf[BUF_SIZE];
     // Store input line number / byte offset below. When should each be incremented?
-    uint32_t line_number = 0;
+    uint32_t line_number = 1;
     uint32_t offset = 0;
     char* args[MAX_ARGS];
     int num_args = 0;
@@ -238,6 +239,7 @@ int pass_two(FILE *input, FILE* output, SymbolTable* symtbl, SymbolTable* reltbl
 
         // Next, use strtok() to scan for next character. If there's nothing,
         // go to the next line.
+        printf("%s\n", buf);
         char* next_line = strtok(buf, IGNORE_CHARS);
         saved_copy = realloc(saved_copy, strlen(next_line)+1);
         strcpy(saved_copy, next_line);
@@ -248,7 +250,8 @@ int pass_two(FILE *input, FILE* output, SymbolTable* symtbl, SymbolTable* reltbl
         num_args = 0;
         while(next_line){
             args[num_args++] = next_line;
-            strtok(NULL, IGNORE_CHARS);
+            printf("%d\t%s\n", num_args, next_line);
+            next_line = strtok(NULL, IGNORE_CHARS);
         }
 
         // Use translate_inst() to translate the instruction and write to output file.
