@@ -1,0 +1,22 @@
+rm -f *.o assembler test-assembler core
+gcc -g -std=gnu99 -Wall -DTESTING -o test-assembler test_assembler.c src/utils.c src/tables.c src/translate_utils.c src/translate.c -L/home/ff/cs61c/cunit/install/lib -I/home/ff/cs61c/cunit/install/include -lcunit
+./test-assembler
+
+
+     CUnit - A unit testing framework for C - Version 2.1-3
+     http://cunit.sourceforge.net/
+
+
+Suite: Testing translate_utils.c
+  Test: test_translate_reg ...passed
+  Test: test_translate_num ...passed
+Suite: Testing tables.c
+  Test: test_table_1 ...passed
+  Test: test_table_2 ...passed
+
+Run Summary:    Type  Total    Ran Passed Failed Inactive
+              suites      2      2    n/a      0        0
+               tests      4      4      4      0        0
+             asserts    244    244    244      0      n/a
+
+Elapsed time =    0.002 seconds
