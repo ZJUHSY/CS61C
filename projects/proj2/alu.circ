@@ -136,7 +136,7 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
   </toolbar>
   <circuit name="main">
     <a name="circuit" val="main"/>
-    <a name="clabel" val="Mulad function is 30 in MUX"/>
+    <a name="clabel" val=""/>
     <a name="clabelup" val="west"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
     <appear>
@@ -396,119 +396,86 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(100,560)" to="(170,560)"/>
     <wire from="(480,780)" to="(550,780)"/>
     <wire from="(750,1300)" to="(760,1300)"/>
-    <comp lib="5" loc="(504,31)" name="Text">
-      <a name="text" val="DON'T CHANGE THE INPUTS AND OUTPUTS! IF YOU DO SO, YOU NEED TO MAKE SURE THE PINS ARE IN THE RIGHT PLACES!"/>
-    </comp>
-    <comp lib="0" loc="(110,530)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="5"/>
-      <a name="label" val="switch"/>
-    </comp>
-    <comp lib="0" loc="(100,560)" name="Constant">
-      <a name="width" val="5"/>
-      <a name="value" val="0x10"/>
-    </comp>
-    <comp lib="5" loc="(488,2009)" name="Text">
-      <a name="text" val="LFSR"/>
-    </comp>
-    <comp lib="0" loc="(920,800)" name="Tunnel">
-      <a name="width" val="32"/>
-      <a name="label" val="sltu"/>
-    </comp>
-    <comp lib="3" loc="(210,550)" name="Comparator">
-      <a name="width" val="5"/>
-    </comp>
-    <comp lib="0" loc="(580,630)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="width" val="5"/>
-      <a name="label" val="switch"/>
-    </comp>
-    <comp lib="5" loc="(805,740)" name="Text">
-      <a name="text" val="SLTU (Set Less Than Unsigned)"/>
-    </comp>
-    <comp lib="0" loc="(470,440)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="subu"/>
-    </comp>
-    <comp lib="0" loc="(490,340)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="sra"/>
-    </comp>
-    <comp lib="0" loc="(480,290)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="sll"/>
-    </comp>
-    <comp lib="0" loc="(410,1330)" name="Tunnel">
-      <a name="width" val="32"/>
-      <a name="label" val="add"/>
-    </comp>
-    <comp lib="5" loc="(108,499)" name="Text">
-      <a name="text" val="INPUT to your circuit"/>
-    </comp>
     <comp lib="0" loc="(580,180)" name="Constant">
       <a name="value" val="0x0"/>
     </comp>
-    <comp lib="1" loc="(910,1510)" name="NOT Gate"/>
-    <comp lib="0" loc="(100,280)" name="Tunnel">
-      <a name="label" val="clk"/>
+    <comp lib="5" loc="(534,979)" name="Text">
+      <a name="text" val="SRL (Shift Right Logical)"/>
     </comp>
+    <comp lib="0" loc="(990,1500)" name="Tunnel">
+      <a name="label" val="sub_overflow"/>
+    </comp>
+    <comp lib="2" loc="(750,230)" name="Multiplexer"/>
+    <comp lib="0" loc="(580,1190)" name="Tunnel">
+      <a name="label" val="iff_equal"/>
+    </comp>
+    <comp lib="2" loc="(600,450)" name="Multiplexer">
+      <a name="select" val="5"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(480,800)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="0" loc="(60,280)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="clock"/>
+    </comp>
+    <comp lib="3" loc="(540,1890)" name="Comparator">
+      <a name="width" val="16"/>
+    </comp>
+    <comp loc="(430,1870)" name="reverse_bit"/>
     <comp lib="0" loc="(750,810)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="y_input"/>
     </comp>
-    <comp lib="5" loc="(813,977)" name="Text">
-      <a name="text" val="SRA (Shift Right Arithmatic)"/>
-    </comp>
-    <comp lib="5" loc="(186,752)" name="Text">
-      <a name="text" val="SUBU (Subtraction Unsigned)"/>
-    </comp>
-    <comp lib="0" loc="(440,1750)" name="Splitter">
-      <a name="fanout" val="1"/>
-      <a name="incoming" val="32"/>
-      <a name="bit0" val="none"/>
-      <a name="bit1" val="none"/>
-      <a name="bit2" val="none"/>
-      <a name="bit3" val="none"/>
-      <a name="bit4" val="none"/>
-      <a name="bit5" val="none"/>
-      <a name="bit6" val="none"/>
-      <a name="bit7" val="none"/>
-      <a name="bit8" val="none"/>
-      <a name="bit9" val="none"/>
-      <a name="bit10" val="none"/>
-      <a name="bit11" val="none"/>
-      <a name="bit12" val="none"/>
-      <a name="bit13" val="none"/>
-      <a name="bit14" val="none"/>
-      <a name="bit15" val="none"/>
-      <a name="bit16" val="none"/>
-      <a name="bit17" val="none"/>
-      <a name="bit18" val="none"/>
-      <a name="bit19" val="none"/>
-      <a name="bit20" val="none"/>
-      <a name="bit21" val="none"/>
-      <a name="bit22" val="none"/>
-      <a name="bit23" val="none"/>
-      <a name="bit24" val="none"/>
-      <a name="bit25" val="none"/>
-      <a name="bit26" val="none"/>
-      <a name="bit27" val="none"/>
-      <a name="bit28" val="none"/>
-      <a name="bit29" val="none"/>
-      <a name="bit30" val="none"/>
-      <a name="bit31" val="0"/>
-    </comp>
-    <comp lib="0" loc="(790,1880)" name="Tunnel">
+    <comp lib="0" loc="(450,530)" name="Tunnel">
+      <a name="facing" val="east"/>
       <a name="width" val="32"/>
-      <a name="label" val="bitpal"/>
+      <a name="label" val="sltu"/>
     </comp>
-    <comp lib="0" loc="(60,280)" name="Pin">
-      <a name="tristate" val="false"/>
-      <a name="label" val="clock"/>
+    <comp lib="0" loc="(920,930)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="sltu"/>
+    </comp>
+    <comp lib="1" loc="(570,910)" name="OR Gate">
+      <a name="width" val="32"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="0" loc="(240,550)" name="Tunnel">
+      <a name="label" val="add_funct"/>
+    </comp>
+    <comp lib="0" loc="(750,770)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="0" loc="(140,800)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="3" loc="(210,550)" name="Comparator">
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(480,890)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="0" loc="(480,380)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="add"/>
+    </comp>
+    <comp lib="0" loc="(650,250)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="add_overflow"/>
+    </comp>
+    <comp lib="5" loc="(861,1422)" name="Text">
+      <a name="text" val="# If top two bits are not same, different top bit for func -&gt; overflow "/>
     </comp>
     <comp lib="0" loc="(90,430)" name="Splitter">
       <a name="facing" val="north"/>
@@ -521,321 +488,90 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="bit4" val="none"/>
       <a name="bit5" val="0"/>
     </comp>
-    <comp lib="0" loc="(920,930)" name="Tunnel">
+    <comp lib="5" loc="(356,1267)" name="Text">
+      <a name="text" val="ADD (Addition)"/>
+    </comp>
+    <comp lib="0" loc="(920,800)" name="Tunnel">
       <a name="width" val="32"/>
       <a name="label" val="sltu"/>
     </comp>
-    <comp lib="0" loc="(450,530)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="sltu"/>
-    </comp>
-    <comp lib="0" loc="(910,1490)" name="Constant">
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="0" loc="(480,780)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(480,930)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="5" loc="(606,1728)" name="Text">
-      <a name="text" val="# Use splitter (from lab 6) to grab only most significant (top) bit"/>
-    </comp>
-    <comp lib="0" loc="(390,2040)" name="Splitter">
-      <a name="incoming" val="32"/>
-      <a name="appear" val="right"/>
-      <a name="bit1" val="0"/>
-      <a name="bit2" val="0"/>
-      <a name="bit3" val="0"/>
-      <a name="bit4" val="0"/>
-      <a name="bit5" val="0"/>
-      <a name="bit6" val="0"/>
-      <a name="bit7" val="0"/>
-      <a name="bit8" val="0"/>
-      <a name="bit9" val="0"/>
-      <a name="bit10" val="0"/>
-      <a name="bit11" val="0"/>
-      <a name="bit12" val="0"/>
-      <a name="bit13" val="0"/>
-      <a name="bit14" val="0"/>
-      <a name="bit15" val="0"/>
-      <a name="bit16" val="1"/>
-      <a name="bit17" val="1"/>
-      <a name="bit18" val="1"/>
-      <a name="bit19" val="1"/>
-      <a name="bit20" val="1"/>
-      <a name="bit21" val="1"/>
-      <a name="bit22" val="1"/>
-      <a name="bit23" val="1"/>
-      <a name="bit24" val="1"/>
-      <a name="bit25" val="1"/>
-      <a name="bit26" val="1"/>
-      <a name="bit27" val="1"/>
-      <a name="bit28" val="1"/>
-      <a name="bit29" val="1"/>
-      <a name="bit30" val="1"/>
-      <a name="bit31" val="1"/>
-    </comp>
-    <comp lib="5" loc="(532,861)" name="Text">
-      <a name="text" val="OR (Boolean |)"/>
-    </comp>
-    <comp lib="0" loc="(720,2080)" name="Splitter">
-      <a name="facing" val="west"/>
-      <a name="incoming" val="32"/>
-      <a name="appear" val="right"/>
-      <a name="bit1" val="0"/>
-      <a name="bit2" val="0"/>
-      <a name="bit3" val="0"/>
-      <a name="bit4" val="0"/>
-      <a name="bit5" val="0"/>
-      <a name="bit6" val="0"/>
-      <a name="bit7" val="0"/>
-      <a name="bit8" val="0"/>
-      <a name="bit9" val="0"/>
-      <a name="bit10" val="0"/>
-      <a name="bit11" val="0"/>
-      <a name="bit12" val="0"/>
-      <a name="bit13" val="0"/>
-      <a name="bit14" val="0"/>
-      <a name="bit15" val="0"/>
-      <a name="bit16" val="1"/>
-      <a name="bit17" val="1"/>
-      <a name="bit18" val="1"/>
-      <a name="bit19" val="1"/>
-      <a name="bit20" val="1"/>
-      <a name="bit21" val="1"/>
-      <a name="bit22" val="1"/>
-      <a name="bit23" val="1"/>
-      <a name="bit24" val="1"/>
-      <a name="bit25" val="1"/>
-      <a name="bit26" val="1"/>
-      <a name="bit27" val="1"/>
-      <a name="bit28" val="1"/>
-      <a name="bit29" val="1"/>
-      <a name="bit30" val="1"/>
-      <a name="bit31" val="1"/>
-    </comp>
-    <comp lib="0" loc="(410,1210)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="0" loc="(260,1350)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="1" loc="(910,230)" name="OR Gate">
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="0" loc="(440,1360)" name="Tunnel">
-      <a name="label" val="add_topbit"/>
-    </comp>
-    <comp lib="2" loc="(490,1480)" name="Multiplexer"/>
-    <comp lib="5" loc="(476,1164)" name="Text">
-      <a name="text" val="IFF Equal Test"/>
-    </comp>
-    <comp lib="0" loc="(270,1880)" name="Splitter">
-      <a name="incoming" val="32"/>
-      <a name="appear" val="right"/>
-      <a name="bit1" val="0"/>
-      <a name="bit2" val="0"/>
-      <a name="bit3" val="0"/>
-      <a name="bit4" val="0"/>
-      <a name="bit5" val="0"/>
-      <a name="bit6" val="0"/>
-      <a name="bit7" val="0"/>
-      <a name="bit8" val="0"/>
-      <a name="bit9" val="0"/>
-      <a name="bit10" val="0"/>
-      <a name="bit11" val="0"/>
-      <a name="bit12" val="0"/>
-      <a name="bit13" val="0"/>
-      <a name="bit14" val="0"/>
-      <a name="bit15" val="0"/>
-      <a name="bit16" val="1"/>
-      <a name="bit17" val="1"/>
-      <a name="bit18" val="1"/>
-      <a name="bit19" val="1"/>
-      <a name="bit20" val="1"/>
-      <a name="bit21" val="1"/>
-      <a name="bit22" val="1"/>
-      <a name="bit23" val="1"/>
-      <a name="bit24" val="1"/>
-      <a name="bit25" val="1"/>
-      <a name="bit26" val="1"/>
-      <a name="bit27" val="1"/>
-      <a name="bit28" val="1"/>
-      <a name="bit29" val="1"/>
-      <a name="bit30" val="1"/>
-      <a name="bit31" val="1"/>
-    </comp>
-    <comp lib="0" loc="(940,1360)" name="Tunnel">
-      <a name="label" val="sub_topbit"/>
-    </comp>
-    <comp lib="3" loc="(840,920)" name="Comparator">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(170,70)" name="Tunnel">
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="5" loc="(856,1402)" name="Text">
-      <a name="text" val="# If top two bits same, then will not overflow (diff -&gt; 0)"/>
-    </comp>
-    <comp lib="0" loc="(750,210)" name="Tunnel">
-      <a name="label" val="sub_funct"/>
-    </comp>
-    <comp lib="3" loc="(240,1020)" name="Shifter">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="3" loc="(350,1330)" name="Adder">
-      <a name="width" val="32"/>
-    </comp>
-    <comp loc="(570,2080)" name="lfsr"/>
-    <comp lib="0" loc="(640,1020)" name="Tunnel">
-      <a name="width" val="32"/>
-      <a name="label" val="srl"/>
-    </comp>
-    <comp lib="2" loc="(960,1500)" name="Multiplexer"/>
-    <comp lib="5" loc="(534,979)" name="Text">
-      <a name="text" val="SRL (Shift Right Logical)"/>
-    </comp>
-    <comp lib="0" loc="(240,610)" name="Tunnel">
-      <a name="label" val="sub_funct"/>
-    </comp>
-    <comp lib="0" loc="(440,1040)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="0" loc="(760,1490)" name="Splitter">
-      <a name="fanout" val="1"/>
-      <a name="incoming" val="32"/>
-      <a name="bit0" val="none"/>
-      <a name="bit1" val="none"/>
-      <a name="bit2" val="none"/>
-      <a name="bit3" val="none"/>
-      <a name="bit4" val="none"/>
-      <a name="bit5" val="none"/>
-      <a name="bit6" val="none"/>
-      <a name="bit7" val="none"/>
-      <a name="bit8" val="none"/>
-      <a name="bit9" val="none"/>
-      <a name="bit10" val="none"/>
-      <a name="bit11" val="none"/>
-      <a name="bit12" val="none"/>
-      <a name="bit13" val="none"/>
-      <a name="bit14" val="none"/>
-      <a name="bit15" val="none"/>
-      <a name="bit16" val="none"/>
-      <a name="bit17" val="none"/>
-      <a name="bit18" val="none"/>
-      <a name="bit19" val="none"/>
-      <a name="bit20" val="none"/>
-      <a name="bit21" val="none"/>
-      <a name="bit22" val="none"/>
-      <a name="bit23" val="none"/>
-      <a name="bit24" val="none"/>
-      <a name="bit25" val="none"/>
-      <a name="bit26" val="none"/>
-      <a name="bit27" val="none"/>
-      <a name="bit28" val="none"/>
-      <a name="bit29" val="none"/>
-      <a name="bit30" val="none"/>
-      <a name="bit31" val="0"/>
-    </comp>
-    <comp lib="3" loc="(610,1020)" name="Shifter">
-      <a name="width" val="32"/>
-      <a name="shift" val="lr"/>
-    </comp>
-    <comp lib="3" loc="(540,1890)" name="Comparator">
-      <a name="width" val="16"/>
-    </comp>
-    <comp lib="0" loc="(760,940)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="0" loc="(590,1760)" name="Tunnel">
-      <a name="label" val="same_top_bit"/>
-    </comp>
-    <comp lib="3" loc="(540,1760)" name="Comparator">
-      <a name="width" val="1"/>
-    </comp>
-    <comp lib="0" loc="(950,230)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="label" val="Signed Overflow"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="0" loc="(750,1340)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="5" loc="(835,1277)" name="Text">
-      <a name="text" val="# Signed overflow if top bit is incorrectly found"/>
-    </comp>
-    <comp lib="0" loc="(510,310)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="srl"/>
-    </comp>
-    <comp lib="3" loc="(530,1190)" name="Comparator">
-      <a name="width" val="32"/>
-    </comp>
-    <comp loc="(430,1870)" name="reverse_bit"/>
-    <comp lib="0" loc="(480,800)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="0" loc="(520,1480)" name="Tunnel">
-      <a name="label" val="add_overflow"/>
-    </comp>
-    <comp lib="0" loc="(140,310)" name="Tunnel">
-      <a name="label" val="reset"/>
-    </comp>
-    <comp lib="0" loc="(900,360)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="iff_equal"/>
-    </comp>
-    <comp lib="0" loc="(990,1500)" name="Tunnel">
-      <a name="label" val="sub_overflow"/>
-    </comp>
-    <comp lib="3" loc="(200,610)" name="Comparator">
-      <a name="width" val="5"/>
-    </comp>
-    <comp lib="0" loc="(120,70)" name="Pin">
+    <comp lib="0" loc="(120,160)" name="Pin">
       <a name="width" val="32"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="X"/>
+      <a name="label" val="Y"/>
     </comp>
-    <comp lib="0" loc="(130,1000)" name="Tunnel">
-      <a name="facing" val="east"/>
+    <comp lib="0" loc="(470,1540)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="same_top_bit"/>
+    </comp>
+    <comp lib="0" loc="(790,1880)" name="Tunnel">
       <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
+      <a name="label" val="bitpal"/>
     </comp>
-    <comp lib="5" loc="(799,870)" name="Text">
-      <a name="text" val="SLT (Set Less Than)"/>
+    <comp lib="0" loc="(920,290)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="32"/>
+      <a name="label" val="RESULT"/>
+      <a name="labelloc" val="east"/>
     </comp>
     <comp lib="0" loc="(480,420)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="sub"/>
     </comp>
-    <comp lib="0" loc="(270,790)" name="Tunnel">
+    <comp lib="0" loc="(230,1500)" name="Tunnel">
+      <a name="facing" val="east"/>
       <a name="width" val="32"/>
-      <a name="label" val="subu"/>
+      <a name="label" val="x_input"/>
     </comp>
-    <comp lib="0" loc="(100,370)" name="Tunnel">
-      <a name="facing" val="south"/>
+    <comp lib="5" loc="(532,861)" name="Text">
+      <a name="text" val="OR (Boolean |)"/>
+    </comp>
+    <comp lib="5" loc="(164,982)" name="Text">
+      <a name="text" val="SLL (Shift Left Logical)"/>
+    </comp>
+    <comp lib="0" loc="(460,460)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="and"/>
+    </comp>
+    <comp lib="0" loc="(480,400)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="addu"/>
+    </comp>
+    <comp lib="3" loc="(840,1510)" name="Comparator">
+      <a name="width" val="1"/>
+    </comp>
+    <comp lib="0" loc="(800,2080)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="lfsr"/>
+    </comp>
+    <comp lib="0" loc="(520,1480)" name="Tunnel">
+      <a name="label" val="add_overflow"/>
+    </comp>
+    <comp lib="5" loc="(382,1403)" name="Text">
+      <a name="text" val="# If top two bits are not same, then will not overflow (sum -&gt; 0)"/>
+    </comp>
+    <comp lib="0" loc="(910,1490)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="5" loc="(268,282)" name="Text"/>
+    <comp lib="0" loc="(160,930)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="2" loc="(750,180)" name="Multiplexer"/>
+    <comp lib="1" loc="(940,1530)" name="NOT Gate">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="3" loc="(380,1510)" name="Comparator">
+      <a name="width" val="1"/>
+    </comp>
+    <comp lib="0" loc="(100,600)" name="Tunnel">
+      <a name="facing" val="east"/>
       <a name="width" val="5"/>
       <a name="label" val="switch"/>
     </comp>
@@ -875,373 +611,91 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="bit30" val="none"/>
       <a name="bit31" val="0"/>
     </comp>
-    <comp lib="0" loc="(140,780)" name="Tunnel">
+    <comp lib="0" loc="(440,550)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
+      <a name="label" val="bitpal"/>
     </comp>
-    <comp lib="0" loc="(640,910)" name="Tunnel">
+    <comp lib="0" loc="(270,790)" name="Tunnel">
       <a name="width" val="32"/>
-      <a name="label" val="or"/>
+      <a name="label" val="subu"/>
     </comp>
-    <comp lib="0" loc="(480,890)" name="Tunnel">
-      <a name="facing" val="east"/>
+    <comp lib="2" loc="(490,1480)" name="Multiplexer"/>
+    <comp lib="3" loc="(610,1020)" name="Shifter">
       <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
+      <a name="shift" val="lr"/>
     </comp>
-    <comp lib="0" loc="(90,620)" name="Constant">
-      <a name="width" val="5"/>
-      <a name="value" val="0x12"/>
+    <comp lib="5" loc="(835,1277)" name="Text">
+      <a name="text" val="# Signed overflow if top bit is incorrectly found"/>
     </comp>
-    <comp lib="5" loc="(185,857)" name="Text">
-      <a name="text" val="AND (Boolean &amp;)"/>
+    <comp lib="5" loc="(488,2009)" name="Text">
+      <a name="text" val="LFSR"/>
     </comp>
-    <comp lib="5" loc="(390,1427)" name="Text">
-      <a name="text" val="# If top two bits are same, different top bit for func -&gt; overflow "/>
-    </comp>
-    <comp lib="5" loc="(444,1844)" name="Text">
-      <a name="text" val="Bitpal"/>
-    </comp>
-    <comp lib="3" loc="(380,1510)" name="Comparator">
-      <a name="width" val="1"/>
-    </comp>
-    <comp lib="0" loc="(160,930)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="0" loc="(920,290)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="32"/>
-      <a name="label" val="RESULT"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="5" loc="(415,1945)" name="Text">
-      <a name="text" val="Reverse Bit 16-31"/>
-    </comp>
-    <comp lib="5" loc="(831,1261)" name="Text">
-      <a name="text" val="SUB (Subtraction)"/>
-    </comp>
-    <comp lib="0" loc="(720,1490)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(140,1040)" name="Bit Extender">
+    <comp lib="0" loc="(810,1040)" name="Bit Extender">
       <a name="in_width" val="32"/>
       <a name="out_width" val="5"/>
     </comp>
-    <comp lib="2" loc="(750,180)" name="Multiplexer"/>
-    <comp lib="0" loc="(480,400)" name="Tunnel">
+    <comp lib="0" loc="(430,580)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="addu"/>
-    </comp>
-    <comp lib="0" loc="(630,790)" name="Tunnel">
-      <a name="width" val="32"/>
-      <a name="label" val="addu"/>
-    </comp>
-    <comp lib="0" loc="(930,360)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="label" val="Equal"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="0" loc="(900,1320)" name="Tunnel">
-      <a name="width" val="32"/>
-      <a name="label" val="sub"/>
-    </comp>
-    <comp lib="3" loc="(930,1020)" name="Shifter">
-      <a name="width" val="32"/>
-      <a name="shift" val="ar"/>
-    </comp>
-    <comp lib="0" loc="(410,1750)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(170,160)" name="Tunnel">
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="0" loc="(800,2080)" name="Tunnel">
       <a name="width" val="32"/>
       <a name="label" val="lfsr"/>
-    </comp>
-    <comp lib="3" loc="(240,790)" name="Subtractor">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(750,260)" name="Tunnel">
-      <a name="label" val="add_funct"/>
-    </comp>
-    <comp lib="5" loc="(959,206)" name="Text">
-      <a name="text" val="OUTPUTS of your circuit"/>
-    </comp>
-    <comp lib="5" loc="(467,712)" name="Text">
-      <a name="text" val="Core ALU (MIPS) Functions"/>
-      <a name="font" val="SansSerif bold 24"/>
-    </comp>
-    <comp lib="3" loc="(840,1510)" name="Comparator">
-      <a name="width" val="1"/>
-    </comp>
-    <comp lib="0" loc="(240,1880)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="3" loc="(830,790)" name="Comparator">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="3" loc="(830,1320)" name="Subtractor">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(480,380)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="add"/>
-    </comp>
-    <comp lib="0" loc="(750,770)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(400,1370)" name="Splitter">
-      <a name="fanout" val="1"/>
-      <a name="incoming" val="32"/>
-      <a name="bit0" val="none"/>
-      <a name="bit1" val="none"/>
-      <a name="bit2" val="none"/>
-      <a name="bit3" val="none"/>
-      <a name="bit4" val="none"/>
-      <a name="bit5" val="none"/>
-      <a name="bit6" val="none"/>
-      <a name="bit7" val="none"/>
-      <a name="bit8" val="none"/>
-      <a name="bit9" val="none"/>
-      <a name="bit10" val="none"/>
-      <a name="bit11" val="none"/>
-      <a name="bit12" val="none"/>
-      <a name="bit13" val="none"/>
-      <a name="bit14" val="none"/>
-      <a name="bit15" val="none"/>
-      <a name="bit16" val="none"/>
-      <a name="bit17" val="none"/>
-      <a name="bit18" val="none"/>
-      <a name="bit19" val="none"/>
-      <a name="bit20" val="none"/>
-      <a name="bit21" val="none"/>
-      <a name="bit22" val="none"/>
-      <a name="bit23" val="none"/>
-      <a name="bit24" val="none"/>
-      <a name="bit25" val="none"/>
-      <a name="bit26" val="none"/>
-      <a name="bit27" val="none"/>
-      <a name="bit28" val="none"/>
-      <a name="bit29" val="none"/>
-      <a name="bit30" val="none"/>
-      <a name="bit31" val="0"/>
-    </comp>
-    <comp lib="0" loc="(940,1570)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="same_top_bit"/>
-    </comp>
-    <comp lib="0" loc="(120,160)" name="Pin">
-      <a name="width" val="32"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="Y"/>
-    </comp>
-    <comp lib="5" loc="(164,982)" name="Text">
-      <a name="text" val="SLL (Shift Left Logical)"/>
-    </comp>
-    <comp lib="5" loc="(541,743)" name="Text">
-      <a name="text" val="ADDU (Addition Unsigned)"/>
-    </comp>
-    <comp lib="5" loc="(356,1267)" name="Text">
-      <a name="text" val="ADD (Addition)"/>
-    </comp>
-    <comp lib="0" loc="(440,1790)" name="Splitter">
-      <a name="fanout" val="1"/>
-      <a name="incoming" val="32"/>
-      <a name="bit0" val="none"/>
-      <a name="bit1" val="none"/>
-      <a name="bit2" val="none"/>
-      <a name="bit3" val="none"/>
-      <a name="bit4" val="none"/>
-      <a name="bit5" val="none"/>
-      <a name="bit6" val="none"/>
-      <a name="bit7" val="none"/>
-      <a name="bit8" val="none"/>
-      <a name="bit9" val="none"/>
-      <a name="bit10" val="none"/>
-      <a name="bit11" val="none"/>
-      <a name="bit12" val="none"/>
-      <a name="bit13" val="none"/>
-      <a name="bit14" val="none"/>
-      <a name="bit15" val="none"/>
-      <a name="bit16" val="none"/>
-      <a name="bit17" val="none"/>
-      <a name="bit18" val="none"/>
-      <a name="bit19" val="none"/>
-      <a name="bit20" val="none"/>
-      <a name="bit21" val="none"/>
-      <a name="bit22" val="none"/>
-      <a name="bit23" val="none"/>
-      <a name="bit24" val="none"/>
-      <a name="bit25" val="none"/>
-      <a name="bit26" val="none"/>
-      <a name="bit27" val="none"/>
-      <a name="bit28" val="none"/>
-      <a name="bit29" val="none"/>
-      <a name="bit30" val="none"/>
-      <a name="bit31" val="0"/>
-    </comp>
-    <comp lib="0" loc="(140,800)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="y_input"/>
-    </comp>
-    <comp lib="0" loc="(400,1470)" name="Constant">
-      <a name="value" val="0x0"/>
     </comp>
     <comp lib="5" loc="(182,585)" name="Text">
       <a name="text" val="Add Function is 16 in MUX"/>
     </comp>
-    <comp lib="2" loc="(600,450)" name="Multiplexer">
-      <a name="select" val="5"/>
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(660,1890)" name="Bit Extender">
-      <a name="in_width" val="1"/>
-      <a name="out_width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(410,1170)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(750,1000)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(460,460)" name="Tunnel">
-      <a name="facing" val="east"/>
+    <comp lib="0" loc="(300,910)" name="Tunnel">
       <a name="width" val="32"/>
       <a name="label" val="and"/>
     </comp>
-    <comp lib="0" loc="(100,310)" name="Pin">
-      <a name="tristate" val="false"/>
-      <a name="label" val="Mul/Div Reset"/>
-    </comp>
-    <comp lib="0" loc="(290,1020)" name="Tunnel">
-      <a name="width" val="32"/>
-      <a name="label" val="sll"/>
-    </comp>
-    <comp lib="0" loc="(440,990)" name="Tunnel">
+    <comp lib="0" loc="(740,1540)" name="Tunnel">
       <a name="facing" val="east"/>
+      <a name="label" val="sub_topbit"/>
+    </comp>
+    <comp lib="5" loc="(108,499)" name="Text">
+      <a name="text" val="INPUT to your circuit"/>
+    </comp>
+    <comp lib="5" loc="(606,1728)" name="Text">
+      <a name="text" val="# Use splitter (from lab 6) to grab only most significant (top) bit"/>
+    </comp>
+    <comp lib="0" loc="(440,1360)" name="Tunnel">
+      <a name="label" val="add_topbit"/>
+    </comp>
+    <comp lib="3" loc="(830,1320)" name="Subtractor">
       <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(470,1540)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="same_top_bit"/>
-    </comp>
-    <comp lib="5" loc="(92,226)" name="Text">
-      <a name="text" val="INPUTS to your circuit"/>
-    </comp>
-    <comp lib="1" loc="(280,910)" name="AND Gate">
-      <a name="width" val="32"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="1" loc="(940,1530)" name="NOT Gate">
-      <a name="facing" val="north"/>
-    </comp>
-    <comp lib="5" loc="(603,1710)" name="Text">
-      <a name="text" val="Overflow Detection"/>
-    </comp>
-    <comp lib="0" loc="(90,450)" name="Pin">
-      <a name="facing" val="north"/>
-      <a name="width" val="6"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="Switch (S)"/>
     </comp>
     <comp lib="0" loc="(450,510)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="slt"/>
     </comp>
-    <comp lib="5" loc="(861,1422)" name="Text">
-      <a name="text" val="# If top two bits are not same, different top bit for func -&gt; overflow "/>
-    </comp>
-    <comp lib="5" loc="(364,1291)" name="Text">
-      <a name="text" val="# Signed overflow if top bit is incorrectly found"/>
-    </comp>
-    <comp lib="0" loc="(900,930)" name="Bit Extender">
-      <a name="in_width" val="1"/>
-      <a name="out_width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(300,910)" name="Tunnel">
+    <comp lib="3" loc="(590,790)" name="Adder">
       <a name="width" val="32"/>
-      <a name="label" val="and"/>
     </comp>
-    <comp lib="0" loc="(900,800)" name="Bit Extender">
-      <a name="in_width" val="1"/>
-      <a name="out_width" val="32"/>
-    </comp>
-    <comp lib="1" loc="(440,1510)" name="NOT Gate"/>
-    <comp lib="0" loc="(430,580)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="lfsr"/>
-    </comp>
-    <comp lib="0" loc="(160,890)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(740,1040)" name="Tunnel">
+    <comp lib="0" loc="(440,1040)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="y_input"/>
     </comp>
-    <comp lib="0" loc="(750,1300)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(740,1540)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="sub_topbit"/>
-    </comp>
-    <comp lib="0" loc="(80,1040)" name="Tunnel">
+    <comp lib="0" loc="(750,1340)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="y_input"/>
     </comp>
-    <comp lib="0" loc="(240,2050)" name="Tunnel">
+    <comp lib="0" loc="(660,1890)" name="Bit Extender">
+      <a name="in_width" val="1"/>
+      <a name="out_width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(440,990)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="x_input"/>
     </comp>
-    <comp lib="5" loc="(268,282)" name="Text"/>
-    <comp lib="1" loc="(570,910)" name="OR Gate">
-      <a name="width" val="32"/>
-      <a name="inputs" val="2"/>
+    <comp lib="5" loc="(541,743)" name="Text">
+      <a name="text" val="ADDU (Addition Unsigned)"/>
     </comp>
-    <comp lib="0" loc="(950,1020)" name="Tunnel">
+    <comp lib="3" loc="(930,1020)" name="Shifter">
       <a name="width" val="32"/>
-      <a name="label" val="sra"/>
-    </comp>
-    <comp lib="0" loc="(760,900)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="32"/>
-      <a name="label" val="x_input"/>
-    </comp>
-    <comp lib="0" loc="(100,600)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="5"/>
-      <a name="label" val="switch"/>
+      <a name="shift" val="ar"/>
     </comp>
     <comp lib="0" loc="(280,1500)" name="Splitter">
       <a name="fanout" val="1"/>
@@ -1279,63 +733,609 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="bit30" val="none"/>
       <a name="bit31" val="0"/>
     </comp>
-    <comp lib="0" loc="(230,1500)" name="Tunnel">
+    <comp lib="0" loc="(750,210)" name="Tunnel">
+      <a name="label" val="sub_funct"/>
+    </comp>
+    <comp lib="0" loc="(510,1040)" name="Bit Extender">
+      <a name="in_width" val="32"/>
+      <a name="out_width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(760,900)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="0" loc="(120,70)" name="Pin">
+      <a name="width" val="32"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="X"/>
     </comp>
     <comp lib="0" loc="(260,1310)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="x_input"/>
     </comp>
-    <comp lib="0" loc="(650,250)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="add_overflow"/>
+    <comp lib="3" loc="(350,1330)" name="Adder">
+      <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(250,1540)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="add_topbit"/>
+    <comp lib="3" loc="(200,610)" name="Comparator">
+      <a name="width" val="5"/>
     </comp>
-    <comp lib="2" loc="(750,230)" name="Multiplexer"/>
-    <comp lib="0" loc="(510,1040)" name="Bit Extender">
+    <comp lib="0" loc="(440,1790)" name="Splitter">
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="32"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="none"/>
+      <a name="bit2" val="none"/>
+      <a name="bit3" val="none"/>
+      <a name="bit4" val="none"/>
+      <a name="bit5" val="none"/>
+      <a name="bit6" val="none"/>
+      <a name="bit7" val="none"/>
+      <a name="bit8" val="none"/>
+      <a name="bit9" val="none"/>
+      <a name="bit10" val="none"/>
+      <a name="bit11" val="none"/>
+      <a name="bit12" val="none"/>
+      <a name="bit13" val="none"/>
+      <a name="bit14" val="none"/>
+      <a name="bit15" val="none"/>
+      <a name="bit16" val="none"/>
+      <a name="bit17" val="none"/>
+      <a name="bit18" val="none"/>
+      <a name="bit19" val="none"/>
+      <a name="bit20" val="none"/>
+      <a name="bit21" val="none"/>
+      <a name="bit22" val="none"/>
+      <a name="bit23" val="none"/>
+      <a name="bit24" val="none"/>
+      <a name="bit25" val="none"/>
+      <a name="bit26" val="none"/>
+      <a name="bit27" val="none"/>
+      <a name="bit28" val="none"/>
+      <a name="bit29" val="none"/>
+      <a name="bit30" val="none"/>
+      <a name="bit31" val="0"/>
+    </comp>
+    <comp lib="0" loc="(900,1320)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="sub"/>
+    </comp>
+    <comp lib="0" loc="(90,450)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="width" val="6"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="Switch (S)"/>
+    </comp>
+    <comp lib="5" loc="(504,31)" name="Text">
+      <a name="text" val="DON'T CHANGE THE INPUTS AND OUTPUTS! IF YOU DO SO, YOU NEED TO MAKE SURE THE PINS ARE IN THE RIGHT PLACES!"/>
+    </comp>
+    <comp lib="0" loc="(750,260)" name="Tunnel">
+      <a name="label" val="add_funct"/>
+    </comp>
+    <comp lib="0" loc="(590,1760)" name="Tunnel">
+      <a name="label" val="same_top_bit"/>
+    </comp>
+    <comp lib="0" loc="(950,1020)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="sra"/>
+    </comp>
+    <comp lib="0" loc="(100,370)" name="Tunnel">
+      <a name="facing" val="south"/>
+      <a name="width" val="5"/>
+      <a name="label" val="switch"/>
+    </comp>
+    <comp lib="0" loc="(160,890)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="5" loc="(813,977)" name="Text">
+      <a name="text" val="SRA (Shift Right Arithmatic)"/>
+    </comp>
+    <comp lib="0" loc="(470,440)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="subu"/>
+    </comp>
+    <comp lib="0" loc="(410,1790)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="5" loc="(92,226)" name="Text">
+      <a name="text" val="INPUTS to your circuit"/>
+    </comp>
+    <comp lib="0" loc="(240,1880)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="3" loc="(240,790)" name="Subtractor">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(900,930)" name="Bit Extender">
+      <a name="in_width" val="1"/>
+      <a name="out_width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(720,1490)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="3" loc="(540,1760)" name="Comparator">
+      <a name="width" val="1"/>
+    </comp>
+    <comp lib="0" loc="(140,1040)" name="Bit Extender">
       <a name="in_width" val="32"/>
       <a name="out_width" val="5"/>
+    </comp>
+    <comp lib="3" loc="(830,790)" name="Comparator">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(240,2050)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="3" loc="(530,1190)" name="Comparator">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(100,310)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="Mul/Div Reset"/>
+    </comp>
+    <comp lib="5" loc="(805,740)" name="Text">
+      <a name="text" val="SLTU (Set Less Than Unsigned)"/>
+    </comp>
+    <comp lib="0" loc="(640,1020)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="srl"/>
+    </comp>
+    <comp lib="5" loc="(476,1164)" name="Text">
+      <a name="text" val="IFF Equal Test"/>
+    </comp>
+    <comp lib="0" loc="(760,940)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="5" loc="(185,857)" name="Text">
+      <a name="text" val="AND (Boolean &amp;)"/>
+    </comp>
+    <comp lib="0" loc="(480,930)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="0" loc="(750,1300)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="3" loc="(240,1020)" name="Shifter">
+      <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(450,480)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="or"/>
     </comp>
-    <comp lib="0" loc="(440,550)" name="Tunnel">
+    <comp lib="0" loc="(720,2080)" name="Splitter">
+      <a name="facing" val="west"/>
+      <a name="incoming" val="32"/>
+      <a name="appear" val="right"/>
+      <a name="bit1" val="0"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="0"/>
+      <a name="bit4" val="0"/>
+      <a name="bit5" val="0"/>
+      <a name="bit6" val="0"/>
+      <a name="bit7" val="0"/>
+      <a name="bit8" val="0"/>
+      <a name="bit9" val="0"/>
+      <a name="bit10" val="0"/>
+      <a name="bit11" val="0"/>
+      <a name="bit12" val="0"/>
+      <a name="bit13" val="0"/>
+      <a name="bit14" val="0"/>
+      <a name="bit15" val="0"/>
+      <a name="bit16" val="1"/>
+      <a name="bit17" val="1"/>
+      <a name="bit18" val="1"/>
+      <a name="bit19" val="1"/>
+      <a name="bit20" val="1"/>
+      <a name="bit21" val="1"/>
+      <a name="bit22" val="1"/>
+      <a name="bit23" val="1"/>
+      <a name="bit24" val="1"/>
+      <a name="bit25" val="1"/>
+      <a name="bit26" val="1"/>
+      <a name="bit27" val="1"/>
+      <a name="bit28" val="1"/>
+      <a name="bit29" val="1"/>
+      <a name="bit30" val="1"/>
+      <a name="bit31" val="1"/>
+    </comp>
+    <comp lib="5" loc="(186,752)" name="Text">
+      <a name="text" val="SUBU (Subtraction Unsigned)"/>
+    </comp>
+    <comp lib="0" loc="(100,560)" name="Constant">
+      <a name="width" val="5"/>
+      <a name="value" val="0x10"/>
+    </comp>
+    <comp lib="0" loc="(490,340)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
-      <a name="label" val="bitpal"/>
+      <a name="label" val="sra"/>
+    </comp>
+    <comp lib="0" loc="(400,1470)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="5" loc="(415,1945)" name="Text">
+      <a name="text" val="Reverse Bit 16-31"/>
+    </comp>
+    <comp lib="0" loc="(630,790)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="addu"/>
+    </comp>
+    <comp lib="0" loc="(580,630)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="width" val="5"/>
+      <a name="label" val="switch"/>
+    </comp>
+    <comp lib="0" loc="(140,310)" name="Tunnel">
+      <a name="label" val="reset"/>
+    </comp>
+    <comp lib="5" loc="(856,1402)" name="Text">
+      <a name="text" val="# If top two bits same, then will not overflow (diff -&gt; 0)"/>
+    </comp>
+    <comp lib="3" loc="(840,920)" name="Comparator">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(390,2040)" name="Splitter">
+      <a name="incoming" val="32"/>
+      <a name="appear" val="right"/>
+      <a name="bit1" val="0"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="0"/>
+      <a name="bit4" val="0"/>
+      <a name="bit5" val="0"/>
+      <a name="bit6" val="0"/>
+      <a name="bit7" val="0"/>
+      <a name="bit8" val="0"/>
+      <a name="bit9" val="0"/>
+      <a name="bit10" val="0"/>
+      <a name="bit11" val="0"/>
+      <a name="bit12" val="0"/>
+      <a name="bit13" val="0"/>
+      <a name="bit14" val="0"/>
+      <a name="bit15" val="0"/>
+      <a name="bit16" val="1"/>
+      <a name="bit17" val="1"/>
+      <a name="bit18" val="1"/>
+      <a name="bit19" val="1"/>
+      <a name="bit20" val="1"/>
+      <a name="bit21" val="1"/>
+      <a name="bit22" val="1"/>
+      <a name="bit23" val="1"/>
+      <a name="bit24" val="1"/>
+      <a name="bit25" val="1"/>
+      <a name="bit26" val="1"/>
+      <a name="bit27" val="1"/>
+      <a name="bit28" val="1"/>
+      <a name="bit29" val="1"/>
+      <a name="bit30" val="1"/>
+      <a name="bit31" val="1"/>
+    </comp>
+    <comp lib="5" loc="(831,1261)" name="Text">
+      <a name="text" val="SUB (Subtraction)"/>
+    </comp>
+    <comp lib="0" loc="(900,800)" name="Bit Extender">
+      <a name="in_width" val="1"/>
+      <a name="out_width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(410,1330)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="add"/>
+    </comp>
+    <comp lib="0" loc="(940,1360)" name="Tunnel">
+      <a name="label" val="sub_topbit"/>
+    </comp>
+    <comp lib="5" loc="(959,206)" name="Text">
+      <a name="text" val="OUTPUTS of your circuit"/>
+    </comp>
+    <comp lib="0" loc="(250,1540)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="add_topbit"/>
+    </comp>
+    <comp lib="0" loc="(270,1880)" name="Splitter">
+      <a name="incoming" val="32"/>
+      <a name="appear" val="right"/>
+      <a name="bit1" val="0"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="0"/>
+      <a name="bit4" val="0"/>
+      <a name="bit5" val="0"/>
+      <a name="bit6" val="0"/>
+      <a name="bit7" val="0"/>
+      <a name="bit8" val="0"/>
+      <a name="bit9" val="0"/>
+      <a name="bit10" val="0"/>
+      <a name="bit11" val="0"/>
+      <a name="bit12" val="0"/>
+      <a name="bit13" val="0"/>
+      <a name="bit14" val="0"/>
+      <a name="bit15" val="0"/>
+      <a name="bit16" val="1"/>
+      <a name="bit17" val="1"/>
+      <a name="bit18" val="1"/>
+      <a name="bit19" val="1"/>
+      <a name="bit20" val="1"/>
+      <a name="bit21" val="1"/>
+      <a name="bit22" val="1"/>
+      <a name="bit23" val="1"/>
+      <a name="bit24" val="1"/>
+      <a name="bit25" val="1"/>
+      <a name="bit26" val="1"/>
+      <a name="bit27" val="1"/>
+      <a name="bit28" val="1"/>
+      <a name="bit29" val="1"/>
+      <a name="bit30" val="1"/>
+      <a name="bit31" val="1"/>
+    </comp>
+    <comp lib="5" loc="(444,1844)" name="Text">
+      <a name="text" val="Bitpal"/>
+    </comp>
+    <comp lib="0" loc="(410,1210)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="0" loc="(100,280)" name="Tunnel">
+      <a name="label" val="clk"/>
+    </comp>
+    <comp lib="0" loc="(240,610)" name="Tunnel">
+      <a name="label" val="sub_funct"/>
+    </comp>
+    <comp lib="5" loc="(467,712)" name="Text">
+      <a name="text" val="Core ALU (MIPS) Functions"/>
+      <a name="font" val="SansSerif bold 24"/>
+    </comp>
+    <comp lib="0" loc="(400,1370)" name="Splitter">
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="32"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="none"/>
+      <a name="bit2" val="none"/>
+      <a name="bit3" val="none"/>
+      <a name="bit4" val="none"/>
+      <a name="bit5" val="none"/>
+      <a name="bit6" val="none"/>
+      <a name="bit7" val="none"/>
+      <a name="bit8" val="none"/>
+      <a name="bit9" val="none"/>
+      <a name="bit10" val="none"/>
+      <a name="bit11" val="none"/>
+      <a name="bit12" val="none"/>
+      <a name="bit13" val="none"/>
+      <a name="bit14" val="none"/>
+      <a name="bit15" val="none"/>
+      <a name="bit16" val="none"/>
+      <a name="bit17" val="none"/>
+      <a name="bit18" val="none"/>
+      <a name="bit19" val="none"/>
+      <a name="bit20" val="none"/>
+      <a name="bit21" val="none"/>
+      <a name="bit22" val="none"/>
+      <a name="bit23" val="none"/>
+      <a name="bit24" val="none"/>
+      <a name="bit25" val="none"/>
+      <a name="bit26" val="none"/>
+      <a name="bit27" val="none"/>
+      <a name="bit28" val="none"/>
+      <a name="bit29" val="none"/>
+      <a name="bit30" val="none"/>
+      <a name="bit31" val="0"/>
+    </comp>
+    <comp lib="0" loc="(80,1040)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="0" loc="(950,230)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="Signed Overflow"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="1" loc="(910,230)" name="OR Gate">
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="0" loc="(410,1750)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="0" loc="(510,310)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="srl"/>
+    </comp>
+    <comp lib="0" loc="(170,160)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="0" loc="(930,360)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="Equal"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="1" loc="(280,910)" name="AND Gate">
+      <a name="width" val="32"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="0" loc="(900,360)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="iff_equal"/>
+    </comp>
+    <comp lib="5" loc="(364,1291)" name="Text">
+      <a name="text" val="# Signed overflow if top bit is incorrectly found"/>
+    </comp>
+    <comp lib="1" loc="(910,1510)" name="NOT Gate"/>
+    <comp lib="0" loc="(410,1170)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="1" loc="(440,1510)" name="NOT Gate"/>
+    <comp lib="0" loc="(260,1350)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="0" loc="(90,620)" name="Constant">
+      <a name="width" val="5"/>
+      <a name="value" val="0x12"/>
+    </comp>
+    <comp lib="0" loc="(640,910)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="or"/>
+    </comp>
+    <comp lib="5" loc="(390,1427)" name="Text">
+      <a name="text" val="# If top two bits are same, different top bit for func -&gt; overflow "/>
     </comp>
     <comp lib="0" loc="(650,160)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="sub_overflow"/>
     </comp>
-    <comp lib="0" loc="(580,1190)" name="Tunnel">
-      <a name="label" val="iff_equal"/>
-    </comp>
-    <comp lib="3" loc="(590,790)" name="Adder">
+    <comp loc="(570,2080)" name="lfsr"/>
+    <comp lib="0" loc="(750,1000)" name="Tunnel">
+      <a name="facing" val="east"/>
       <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
     </comp>
-    <comp lib="5" loc="(382,1403)" name="Text">
-      <a name="text" val="# If top two bits are not same, then will not overflow (sum -&gt; 0)"/>
-    </comp>
-    <comp lib="0" loc="(240,550)" name="Tunnel">
-      <a name="label" val="add_funct"/>
-    </comp>
-    <comp lib="0" loc="(810,1040)" name="Bit Extender">
-      <a name="in_width" val="32"/>
-      <a name="out_width" val="5"/>
-    </comp>
-    <comp lib="0" loc="(410,1790)" name="Tunnel">
+    <comp lib="0" loc="(740,1040)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="width" val="32"/>
       <a name="label" val="y_input"/>
+    </comp>
+    <comp lib="0" loc="(440,1750)" name="Splitter">
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="32"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="none"/>
+      <a name="bit2" val="none"/>
+      <a name="bit3" val="none"/>
+      <a name="bit4" val="none"/>
+      <a name="bit5" val="none"/>
+      <a name="bit6" val="none"/>
+      <a name="bit7" val="none"/>
+      <a name="bit8" val="none"/>
+      <a name="bit9" val="none"/>
+      <a name="bit10" val="none"/>
+      <a name="bit11" val="none"/>
+      <a name="bit12" val="none"/>
+      <a name="bit13" val="none"/>
+      <a name="bit14" val="none"/>
+      <a name="bit15" val="none"/>
+      <a name="bit16" val="none"/>
+      <a name="bit17" val="none"/>
+      <a name="bit18" val="none"/>
+      <a name="bit19" val="none"/>
+      <a name="bit20" val="none"/>
+      <a name="bit21" val="none"/>
+      <a name="bit22" val="none"/>
+      <a name="bit23" val="none"/>
+      <a name="bit24" val="none"/>
+      <a name="bit25" val="none"/>
+      <a name="bit26" val="none"/>
+      <a name="bit27" val="none"/>
+      <a name="bit28" val="none"/>
+      <a name="bit29" val="none"/>
+      <a name="bit30" val="none"/>
+      <a name="bit31" val="0"/>
+    </comp>
+    <comp lib="0" loc="(760,1490)" name="Splitter">
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="32"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="none"/>
+      <a name="bit2" val="none"/>
+      <a name="bit3" val="none"/>
+      <a name="bit4" val="none"/>
+      <a name="bit5" val="none"/>
+      <a name="bit6" val="none"/>
+      <a name="bit7" val="none"/>
+      <a name="bit8" val="none"/>
+      <a name="bit9" val="none"/>
+      <a name="bit10" val="none"/>
+      <a name="bit11" val="none"/>
+      <a name="bit12" val="none"/>
+      <a name="bit13" val="none"/>
+      <a name="bit14" val="none"/>
+      <a name="bit15" val="none"/>
+      <a name="bit16" val="none"/>
+      <a name="bit17" val="none"/>
+      <a name="bit18" val="none"/>
+      <a name="bit19" val="none"/>
+      <a name="bit20" val="none"/>
+      <a name="bit21" val="none"/>
+      <a name="bit22" val="none"/>
+      <a name="bit23" val="none"/>
+      <a name="bit24" val="none"/>
+      <a name="bit25" val="none"/>
+      <a name="bit26" val="none"/>
+      <a name="bit27" val="none"/>
+      <a name="bit28" val="none"/>
+      <a name="bit29" val="none"/>
+      <a name="bit30" val="none"/>
+      <a name="bit31" val="0"/>
+    </comp>
+    <comp lib="0" loc="(480,290)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="sll"/>
+    </comp>
+    <comp lib="0" loc="(480,780)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="2" loc="(960,1500)" name="Multiplexer"/>
+    <comp lib="5" loc="(799,870)" name="Text">
+      <a name="text" val="SLT (Set Less Than)"/>
+    </comp>
+    <comp lib="0" loc="(290,1020)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="sll"/>
+    </comp>
+    <comp lib="0" loc="(130,1000)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="0" loc="(940,1570)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="same_top_bit"/>
+    </comp>
+    <comp lib="0" loc="(140,780)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="0" loc="(110,530)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="5"/>
+      <a name="label" val="switch"/>
+    </comp>
+    <comp lib="0" loc="(170,70)" name="Tunnel">
+      <a name="width" val="32"/>
+      <a name="label" val="x_input"/>
+    </comp>
+    <comp lib="5" loc="(603,1710)" name="Text">
+      <a name="text" val="Overflow Detection"/>
     </comp>
   </circuit>
   <circuit name="reverse_bit">
@@ -1414,14 +1414,15 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(410,300)" to="(610,300)"/>
     <wire from="(270,440)" to="(660,440)"/>
     <wire from="(610,320)" to="(620,320)"/>
-    <comp lib="0" loc="(200,310)" name="Pin">
-      <a name="width" val="16"/>
-      <a name="tristate" val="false"/>
-    </comp>
     <comp lib="0" loc="(640,390)" name="Splitter">
       <a name="facing" val="west"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
+      <a name="appear" val="right"/>
+    </comp>
+    <comp lib="0" loc="(250,310)" name="Splitter">
+      <a name="fanout" val="16"/>
+      <a name="incoming" val="16"/>
       <a name="appear" val="right"/>
     </comp>
     <comp lib="0" loc="(840,350)" name="Splitter">
@@ -1444,10 +1445,9 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="bit14" val="1"/>
       <a name="bit15" val="1"/>
     </comp>
-    <comp lib="0" loc="(250,310)" name="Splitter">
-      <a name="fanout" val="16"/>
-      <a name="incoming" val="16"/>
-      <a name="appear" val="right"/>
+    <comp lib="0" loc="(200,310)" name="Pin">
+      <a name="width" val="16"/>
+      <a name="tristate" val="false"/>
     </comp>
     <comp lib="0" loc="(680,490)" name="Splitter">
       <a name="facing" val="west"/>
@@ -1521,23 +1521,12 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="width" val="16"/>
       <a name="tristate" val="false"/>
     </comp>
-    <comp lib="1" loc="(620,400)" name="XOR Gate">
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="1" loc="(1080,370)" name="OR Gate">
-      <a name="width" val="16"/>
-      <a name="inputs" val="2"/>
-    </comp>
     <comp lib="0" loc="(880,460)" name="Constant">
       <a name="width" val="4"/>
       <a name="value" val="0xf"/>
     </comp>
-    <comp lib="3" loc="(530,220)" name="Shifter">
-      <a name="width" val="16"/>
-      <a name="shift" val="lr"/>
-    </comp>
-    <comp lib="3" loc="(980,390)" name="Shifter">
-      <a name="width" val="16"/>
+    <comp lib="1" loc="(730,400)" name="XOR Gate">
+      <a name="inputs" val="2"/>
     </comp>
     <comp lib="0" loc="(1110,370)" name="Pin">
       <a name="facing" val="west"/>
@@ -1546,17 +1535,25 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="out"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="0" loc="(910,390)" name="Bit Extender">
-      <a name="in_width" val="1"/>
+    <comp lib="3" loc="(530,220)" name="Shifter">
+      <a name="width" val="16"/>
+      <a name="shift" val="lr"/>
+    </comp>
+    <comp lib="1" loc="(1080,370)" name="OR Gate">
+      <a name="width" val="16"/>
+      <a name="inputs" val="2"/>
     </comp>
     <comp lib="1" loc="(850,390)" name="XOR Gate">
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="1" loc="(620,400)" name="XOR Gate">
       <a name="inputs" val="2"/>
     </comp>
     <comp lib="0" loc="(440,240)" name="Constant">
       <a name="width" val="4"/>
     </comp>
-    <comp lib="1" loc="(730,400)" name="XOR Gate">
-      <a name="inputs" val="2"/>
+    <comp lib="0" loc="(910,390)" name="Bit Extender">
+      <a name="in_width" val="1"/>
     </comp>
     <comp lib="0" loc="(460,340)" name="Splitter">
       <a name="fanout" val="4"/>
@@ -1577,6 +1574,9 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="bit13" val="none"/>
       <a name="bit14" val="none"/>
       <a name="bit15" val="none"/>
+    </comp>
+    <comp lib="3" loc="(980,390)" name="Shifter">
+      <a name="width" val="16"/>
     </comp>
   </circuit>
 </project>
