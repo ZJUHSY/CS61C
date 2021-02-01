@@ -79,15 +79,24 @@ AMAT = 36.3
 (no cache time) - AMAT = 73.3
 
 ======= Problem 2 =======
-a. 100%
+a. 253/255
 b. 
-
+for (j = 0 ; j < 256 ; i++) {
+    for (i = 0 ; i < 255 ; j++) {
+        array[256*j] += array[256*j + i + 1];
+    }
+}
+miss rate is 0.917
 
 c.
+no, sw always happens after lw, already data in cache.
 
 ======= Problem 3 =======
 a.
+0xc9530000
 b.
+-1698
 c.
-d.
-e.
+2 ^ 26 - 1 
+d. 2 ^ -30
+e. 2 ^ -55
