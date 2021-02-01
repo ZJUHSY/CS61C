@@ -1,0 +1,93 @@
+======= Problem 1 =======
+(a.1)
+tag = 4
+set index = 10
+block offset = 2
+
+(a.2)
+Address | Cache Hit / Miss | Miss Type (Compulsory, Capacity, or Conflict)
+0x0000  | 1                | 0
+0x0004  | 1                | 0
+0x0008  | 1                | 0
+0x000c  | 1                | 0
+0x1000  | 1                | 2
+0x1004  | 1                | 2
+0x1008  | 1                | 2
+0x100c  | 1                | 2
+0x0000  | 1                | 2
+0x0004  | 1                | 2
+0x0008  | 1                | 2
+0x000c  | 1                | 2
+
+(a.3)
+Miss rate = 100%
+AMAT = 1.02 * 10^-7(s)
+(no cache time) - AMAT = 0
+
+(b.1)
+tag = 4
+set index = 9 
+block offset = 3
+
+(b.2)
+Address | Cache Hit / Miss | Miss Type (Compulsory, Capacity, or Conflict)
+0x0000  | 1                | 0
+0x0004  | 0                |
+0x0008  | 1                | 0
+0x000c  | 0                |
+0x1000  | 1                | 2
+0x1004  | 0                |
+0x1008  | 1                | 2
+0x100c  | 0                |
+0x0000  | 1                | 2
+0x0004  | 0                |
+0x0008  | 1                | 2
+0x000c  | 0                | 
+
+(b.3)
+miss rate = 50%
+hit time = 3
+miss time = 110
+AMAT = 58
+(no cache time) - AMAT = 55
+
+(c.1)
+tag = 5
+set index = 9
+block offset = 2
+
+(c.2)
+Address | Cache Hit / Miss | Miss Type (Compulsory, Capacity, or Conflict)
+0x0000  | 1                | 0
+0x0004  | 1                | 0
+0x0008  | 1                | 0
+0x000c  | 1                | 0
+0x1000  | 1                | 0
+0x1004  | 1                | 0
+0x1008  | 1                | 0
+0x100c  | 1                | 0
+0x0000  | 0                |
+0x0004  | 0                |
+0x0008  | 0                |
+0x000c  | 0                |
+
+(c.3)
+miss rate = 33.3%
+hit time = 3
+miss time = 110
+AMAT = 36.3
+(no cache time) - AMAT = 73.3
+
+======= Problem 2 =======
+a. 100%
+b. 
+
+
+c.
+
+======= Problem 3 =======
+a.
+b.
+c.
+d.
+e.
