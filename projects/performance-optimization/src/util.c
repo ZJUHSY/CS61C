@@ -1,7 +1,9 @@
 #include <sys/time.h>
 
 // Place where test data is stored on instructional machines.
-static const char* DATA_FOLDER = "/home/ff/cs61c/proj3/cifar-10-batches-bin";
+// static const char* DATA_FOLDER = "/home/ff/cs61c/proj3/cifar-10-batches-bin";
+static const char* DATA_FOLDER = "/home/dlwlrma/win10/Desktop/cs61c_hsy/data/proj3/cifar-10-batches-bin";
+
 
 // Function to dump the content of a volume for comparison.
 void dump_vol(vol_t* v) {

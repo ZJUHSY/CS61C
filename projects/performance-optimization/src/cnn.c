@@ -148,6 +148,9 @@ typedef struct conv_layer {
   double bias;
   vol_t* biases;
   vol_t** filters;
+
+  //calculate time
+  uint64_t conv_time;
 } conv_layer_t;
 
 conv_layer_t* make_conv_layer(int in_sx, int in_sy, int in_depth,
@@ -184,6 +187,7 @@ conv_layer_t* make_conv_layer(int in_sx, int in_sy, int in_depth,
 }
 
 void conv_forward(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+  uint64_t start_time = timestamp_us();
   for (int i = start; i <= end; i++) {
     vol_t* V = in[i];
     vol_t* A = out[i];
@@ -217,6 +221,7 @@ void conv_forward(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) 
       }
     }
   }
+  l->conv_time += timestamp_us() - start_time;
 }
 
 void conv_load(conv_layer_t* l, const char* fn) {
@@ -260,6 +265,9 @@ typedef struct relu_layer {
   int out_depth;
   int out_sx;
   int out_sy;
+  
+  //calc time
+  uint64_t relu_time;
 } relu_layer_t;
 
 relu_layer_t* make_relu_layer(int in_sx, int in_sy, int in_depth) {
@@ -279,11 +287,13 @@ relu_layer_t* make_relu_layer(int in_sx, int in_sy, int in_depth) {
 }
 
 void relu_forward(relu_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+  uint64_t start_time = timestamp_us();
   for (int j = start; j <= end; j++) {
     for (int i = 0; i < l->in_sx*l->in_sy*l->in_depth; i++) {
       out[j]->w[i] = (in[j]->w[i] < 0.0) ? 0.0 : in[j]->w[i];
     }
   }
+  l->relu_time += timestamp_us() - start_time;
 }
 
 // Pool Layer -----------------------------------------------------------------
@@ -304,6 +314,9 @@ typedef struct pool_layer {
   int out_depth;
   int out_sx;
   int out_sy;
+
+  //calc time
+  uint64_t pool_time;
 } pool_layer_t;
 
 pool_layer_t* make_pool_layer(int in_sx, int in_sy, int in_depth,
@@ -330,6 +343,7 @@ pool_layer_t* make_pool_layer(int in_sx, int in_sy, int in_depth,
 }
 
 void pool_forward(pool_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+  uint64_t start_time = timestamp_us();
   for (int i = start; i <= end; i++) {
     vol_t* V = in[i];
     vol_t* A = out[i];
@@ -359,6 +373,7 @@ void pool_forward(pool_layer_t* l, vol_t** in, vol_t** out, int start, int end) 
       }
     }
   }
+  l->pool_time += timestamp_us() - start_time;
 }
 
 // FC Layer -------------------------------------------------------------------
@@ -381,6 +396,9 @@ typedef struct fc_layer {
   double bias;
   vol_t* biases;
   vol_t** filters;
+  
+  //time_calc 
+  uint64_t fc_time;
 } fc_layer_t;
 
 fc_layer_t* make_fc_layer(int in_sx, int in_sy, int in_depth,
@@ -414,6 +432,7 @@ fc_layer_t* make_fc_layer(int in_sx, int in_sy, int in_depth,
 }
 
 void fc_forward(fc_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+  uint64_t start_time = timestamp_us();
   for (int j = start; j <= end; j++) {
     vol_t* V = in[j];
     vol_t* A = out[j];
@@ -427,6 +446,7 @@ void fc_forward(fc_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
       A->w[i] = a;
     }
   }
+  l->fc_time += timestamp_us() - start_time;
 }
 
 void fc_load(fc_layer_t* l, const char* fn) {
@@ -470,6 +490,9 @@ typedef struct softmax_layer {
   int out_depth;
   int out_sx;
   int out_sy;
+
+  //time calc
+  uint64_t softmax_time;
 } softmax_layer_t;
 
 softmax_layer_t* make_softmax_layer(int in_sx, int in_sy, int in_depth) {
@@ -491,6 +514,7 @@ softmax_layer_t* make_softmax_layer(int in_sx, int in_sy, int in_depth) {
 }
 
 void softmax_forward(softmax_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+  uint64_t start_time = timestamp_us();
   double es[MAX_ES];
 
   for (int j = start; j <= end; j++) {
@@ -517,6 +541,7 @@ void softmax_forward(softmax_layer_t* l, vol_t** in, vol_t** out, int start, int
       A->w[i] = es[i];
     }
   }
+  l->softmax_time += timestamp_us() - start_time;
 }
 
 // Neural Network -------------------------------------------------------------
@@ -672,7 +697,7 @@ void net_forward(network_t* net, batch_t* v, int start, int end) {
 
 #define CAT_LABEL 3
 void net_classify_cats(network_t* net, vol_t** input, double* output, int n) {
-  batch_t* batch = make_batch(net, 1);
+  batch_t* batch = make_batch(net, 32);
 
   for (int i = 0; i < n; i++) {
     copy_vol(batch[0][0], input[i]);
@@ -681,6 +706,46 @@ void net_classify_cats(network_t* net, vol_t** input, double* output, int n) {
   }
 
   free_batch(batch, 1);
+
+  printf("\n---- Time for each segment ----\n\n");
+
+  double total_time = net->l0->conv_time;
+  total_time += net->l1->relu_time;
+  total_time += net->l2->pool_time;
+  total_time += net->l3->conv_time;
+  total_time += net->l4->relu_time;
+  total_time += net->l5->pool_time;
+  total_time += net->l6->conv_time;
+  total_time += net->l7->relu_time;
+  total_time += net->l8->pool_time;
+  total_time += net->l9->fc_time;
+  total_time += net->l10->softmax_time;
+
+  printf("Conv. Layer A Time: %lf ms Fraction: %lf\n", (double) net->l0->conv_time / 1000.0, (double) (net->l0->conv_time / total_time * 100.0));
+  printf("Relu. Layer A Time: %lf ms Fraction: %lf\n", (double) net->l1->relu_time / 1000.0, (double) (net->l1->relu_time / total_time * 100.0));
+  printf("Pool. Layer A Time: %lf ms Fraction: %lf\n", (double) net->l2->pool_time / 1000.0, (double) (net->l2->pool_time / total_time * 100.0));
+  printf("Conv. Layer B Time: %lf ms Fraction: %lf\n", (double) net->l3->conv_time / 1000.0, (double) (net->l3->conv_time / total_time * 100.0));
+  printf("Relu. Layer B Time: %lf ms Fraction: %lf\n", (double) net->l4->relu_time / 1000.0, (double) (net->l4->relu_time / total_time * 100.0));
+  printf("Pool. Layer B Time: %lf ms Fraction: %lf\n", (double) net->l5->pool_time / 1000.0, (double) (net->l5->pool_time / total_time * 100.0));  
+  printf("Conv. Layer C Time: %lf ms Fraction: %lf\n", (double) net->l6->conv_time / 1000.0, (double) (net->l6->conv_time / total_time * 100.0));
+  printf("Relu. Layer C Time: %lf ms Fraction: %lf\n", (double) net->l7->relu_time / 1000.0, (double) (net->l7->relu_time / total_time * 100.0));
+  printf("Pool. Layer C Time: %lf ms Fraction: %lf\n", (double) net->l8->pool_time / 1000.0, (double) (net->l8->pool_time / total_time * 100.0));
+  printf("FC. Layer Time: %lf ms Fraction: %lf\n", (double) net->l9->fc_time / 1000.0, (double) (net->l9->fc_time / total_time * 100.0));
+  printf("SoftMax. Layer Time: %lf ms Fraction: %lf\n", (double) net->l10->softmax_time / 1000.0, (double) (net->l10->softmax_time / total_time * 100.0));
+
+  //print each portion's fraction and time
+
+  double conv_time = (double) (net->l0->conv_time + net->l3->conv_time + net->l6->conv_time);
+  double relu_time = (double) (net->l1->relu_time + net->l4->relu_time + net->l7->relu_time);
+  double pool_time = (double) (net->l2->pool_time + net->l5->pool_time + net->l8->pool_time);
+  double fc_time = (double) (net->l9->fc_time);
+  double softmax_time = (double) (net->l10->softmax_time);
+  printf("Conv Layer Fraction: %lf\n", (double) (conv_time / total_time * 100.0));
+  printf("Relu Layer Fraction: %lf\n", (double) (relu_time / total_time * 100.0));
+  printf("Pool Layer Fraction: %lf\n", (double) (pool_time / total_time * 100.0));
+  printf("FC Layer Fraction: %lf\n", (double) (fc_time / total_time * 100.0));
+  printf("Softmax Layer Fraction: %lf\n", (double) (softmax_time / total_time * 100.0));
+  
 }
 
 // IGNORE EVERYTHING BELOW THIS POINT -----------------------------------------
