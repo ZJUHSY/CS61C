@@ -186,7 +186,45 @@ conv_layer_t* make_conv_layer(int in_sx, int in_sy, int in_depth,
   return l;
 }
 
-void conv_forward(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+// void conv_forward(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+//   uint64_t start_time = timestamp_us();
+//   for (int i = start; i <= end; i++) {
+//     vol_t* V = in[i];
+//     vol_t* A = out[i];
+        
+//     int V_sx = V->sx;
+//     int V_sy = V->sy;
+//     int xy_stride = l->stride;
+  
+//     for(int d = 0; d < l->out_depth; d++) {
+//       vol_t* f = l->filters[d];
+//       int x = -l->pad;
+//       int y = -l->pad;
+//       for(int ay = 0; ay < l->out_sy; y += xy_stride, ay++) {
+//         x = -l->pad;
+//         for(int ax=0; ax < l->out_sx; x += xy_stride, ax++) {
+//           double a = 0.0;
+//           for(int fy = 0; fy < f->sy; fy++) {
+//             int oy = y + fy;
+//             for(int fx = 0; fx < f->sx; fx++) {
+//               int ox = x + fx;
+//               if(oy >= 0 && oy < V_sy && ox >=0 && ox < V_sx) {
+//                 for(int fd=0;fd < f->depth; fd++) {
+//                   a += f->w[((f->sx * fy)+fx)*f->depth+fd] * V->w[((V_sx * oy)+ox)*V->depth+fd];
+//                 }
+//               }
+//             }
+//           }
+//           a += l->biases->w[d];
+//           set_vol(A, ax, ay, d, a);
+//         }
+//       }
+//     }
+//   }
+//   l->conv_time += timestamp_us() - start_time;
+// }
+
+void conv_forward1(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
   uint64_t start_time = timestamp_us();
   for (int i = start; i <= end; i++) {
     vol_t* V = in[i];
@@ -195,22 +233,36 @@ void conv_forward(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) 
     int V_sx = V->sx;
     int V_sy = V->sy;
     int xy_stride = l->stride;
+    //no need to load from mem
+    int x_outer = l->out_sx;
+    int y_outer = l->out_sy;
+    int depth_outer = l->out_depth;
+    int depth_V = V->depth;
+
   
-    for(int d = 0; d < l->out_depth; d++) {
+    for(int d = 0; d < depth_outer; d++) {
       vol_t* f = l->filters[d];
       int x = -l->pad;
       int y = -l->pad;
-      for(int ay = 0; ay < l->out_sy; y += xy_stride, ay++) {
+      //no need to load from mem
+      int x_filter = f->sx;
+      int y_filter = f->sy;
+      int depth_filter = f->depth;
+
+      for(int ay = 0; ay < y_outer; y += xy_stride, ay++) {
         x = -l->pad;
-        for(int ax=0; ax < l->out_sx; x += xy_stride, ax++) {
+        for(int ax=0; ax < x_outer; x += xy_stride, ax++) {
           double a = 0.0;
-          for(int fy = 0; fy < f->sy; fy++) {
+          for(int fy = 0; fy < y_filter; fy++) {
             int oy = y + fy;
-            for(int fx = 0; fx < f->sx; fx++) {
-              int ox = x + fx;
-              if(oy >= 0 && oy < V_sy && ox >=0 && ox < V_sx) {
-                for(int fd=0;fd < f->depth; fd++) {
-                  a += f->w[((f->sx * fy)+fx)*f->depth+fd] * V->w[((V_sx * oy)+ox)*V->depth+fd];
+            if(oy >= 0 && oy < V_sy){
+              for(int fx = 0; fx < x_filter; fx++) {
+                int ox = x + fx;
+                if(ox >=0 && ox < V_sx) { // reduce the check of if-logic
+                  //manual loop unrolling
+                  a += f->w[((x_filter * fy)+fx)*depth_filter] * V->w[((V_sx * oy)+ox)*depth_V];
+                  a += f->w[((x_filter * fy)+fx)*depth_filter + 1] * V->w[((V_sx * oy)+ox)*depth_V + 1];
+                  a += f->w[((x_filter * fy)+fx)*depth_filter + 2] * V->w[((V_sx * oy)+ox)*depth_V + 2];
                 }
               }
             }
@@ -223,6 +275,133 @@ void conv_forward(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) 
   }
   l->conv_time += timestamp_us() - start_time;
 }
+
+void conv_forward4(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+  uint64_t start_time = timestamp_us();
+  for (int i = start; i <= end; i++) {
+    vol_t* V = in[i];
+    vol_t* A = out[i];
+        
+    int V_sx = V->sx;
+    int V_sy = V->sy;
+    int xy_stride = l->stride;
+    //no need to load from mem
+    int x_outer = l->out_sx;
+    int y_outer = l->out_sy;
+    int depth_outer = l->out_depth;
+    int depth_V = V->depth;
+
+  
+    for(int d = 0; d < depth_outer; d++) {
+      vol_t* f = l->filters[d];
+      int x = -l->pad;
+      int y = -l->pad;
+      //no need to load from mem
+      int x_filter = f->sx;
+      int y_filter = f->sy;
+      int depth_filter = f->depth;
+
+      for(int ay = 0; ay < y_outer; y += xy_stride, ay++) {
+        x = -l->pad;
+        for(int ax=0; ax < x_outer; x += xy_stride, ax++) {
+          double a = 0.0;
+
+          __m128d f_grabber = _mm_setzero_pd();
+          __m128d V_grabber = _mm_setzero_pd();
+          __m128d a_val = _mm_setzero_pd();
+          __m128d multiplier = _mm_setzero_pd();
+
+          for(int fy = 0; fy < y_filter; fy++) {
+            int oy = y + fy;
+            if(oy >= 0 && oy < V_sy){
+              for(int fx = 0; fx < x_filter; fx++) {
+                int ox = x + fx;
+                if(ox >=0 && ox < V_sx) { // reduce the check of if-logic
+                  double* f_addr = &(f->w[((x_filter * fy) + fx) * depth_filter]);
+                  double * V_addr = &(V->w[((V_sx * oy) + ox) * depth_V]); 
+                  for(int fd = 0; fd < 16; fd += 2){
+                    f_grabber = _mm_load_pd(f_addr + fd);
+                    V_grabber = _mm_load_pd(V_addr + fd);
+                    multiplier = _mm_mul_pd(f_grabber, V_grabber);
+                    a_val = _mm_add_pd(a_val, multiplier);
+                    a = (double) a_val[0] + (double) a_val[1];
+                  }
+                }
+              }
+            }
+          }
+          a += l->biases->w[d];
+          set_vol(A, ax, ay, d, a);
+        }
+      }
+    }
+  }
+  l->conv_time += timestamp_us() - start_time;
+}
+
+void conv_forward7(conv_layer_t* l, vol_t** in, vol_t** out, int start, int end) {
+  uint64_t start_time = timestamp_us();
+  for (int i = start; i <= end; i++) {
+    vol_t* V = in[i];
+    vol_t* A = out[i];
+        
+    int V_sx = V->sx;
+    int V_sy = V->sy;
+    int xy_stride = l->stride;
+    //no need to load from mem
+    int x_outer = l->out_sx;
+    int y_outer = l->out_sy;
+    int depth_outer = l->out_depth;
+    int depth_V = V->depth;
+
+  
+    for(int d = 0; d < depth_outer; d++) {
+      vol_t* f = l->filters[d];
+      int x = -l->pad;
+      int y = -l->pad;
+      //no need to load from mem
+      int x_filter = f->sx;
+      int y_filter = f->sy;
+      int depth_filter = f->depth;
+
+      for(int ay = 0; ay < y_outer; y += xy_stride, ay++) {
+        x = -l->pad;
+        for(int ax=0; ax < x_outer; x += xy_stride, ax++) {
+          double a = 0.0;
+
+          __m128d f_grabber = _mm_setzero_pd();
+          __m128d V_grabber = _mm_setzero_pd();
+          __m128d a_val = _mm_setzero_pd();
+          __m128d multiplier = _mm_setzero_pd();
+
+          for(int fy = 0; fy < y_filter; fy++) {
+            int oy = y + fy;
+            if(oy >= 0 && oy < V_sy){
+              for(int fx = 0; fx < x_filter; fx++) {
+                int ox = x + fx;
+                if(ox >=0 && ox < V_sx) { // reduce the check of if-logic
+                  double* f_addr = &(f->w[((x_filter * fy) + fx) * depth_filter]);
+                  double * V_addr = &(V->w[((V_sx * oy) + ox) * depth_V]); 
+                  for(int fd = 0; fd < 20; fd += 2){
+                    f_grabber = _mm_load_pd(f_addr + fd);
+                    V_grabber = _mm_load_pd(V_addr + fd);
+                    multiplier = _mm_mul_pd(f_grabber, V_grabber);
+                    a_val = _mm_add_pd(a_val, multiplier);
+                    a = (double) a_val[0] + (double) a_val[1];
+                  }
+                }
+              }
+            }
+          }
+          a += l->biases->w[d];
+          set_vol(A, ax, ay, d, a);
+        }
+      }
+    }
+  }
+  l->conv_time += timestamp_us() - start_time;
+}
+      
 
 void conv_load(conv_layer_t* l, const char* fn) {
   int sx, sy, depth, filters;
@@ -673,13 +852,13 @@ void free_batch(batch_t* v, int size) {
  */
 
 void net_forward(network_t* net, batch_t* v, int start, int end) {
-  conv_forward(net->l0, v[0], v[1], start, end);
+  conv_forward1(net->l0, v[0], v[1], start, end);
   relu_forward(net->l1, v[1], v[2], start, end);
   pool_forward(net->l2, v[2], v[3], start, end);
-  conv_forward(net->l3, v[3], v[4], start, end);
+  conv_forward4(net->l3, v[3], v[4], start, end);
   relu_forward(net->l4, v[4], v[5], start, end);
   pool_forward(net->l5, v[5], v[6], start, end);
-  conv_forward(net->l6, v[6], v[7], start, end);
+  conv_forward7(net->l6, v[6], v[7], start, end);
   relu_forward(net->l7, v[7], v[8], start, end);
   pool_forward(net->l8, v[8], v[9], start, end);
   fc_forward(net->l9, v[9], v[10], start, end);
@@ -697,15 +876,20 @@ void net_forward(network_t* net, batch_t* v, int start, int end) {
 
 #define CAT_LABEL 3
 void net_classify_cats(network_t* net, vol_t** input, double* output, int n) {
-  batch_t* batch = make_batch(net, 32);
 
+#pragma omp parallel
+{
+  batch_t* batch = make_batch(net, 1);
+  #pragma omp for 
   for (int i = 0; i < n; i++) {
     copy_vol(batch[0][0], input[i]);
     net_forward(net, batch, 0, 0);
     output[i] = batch[11][0]->w[CAT_LABEL]; 
   }
-
   free_batch(batch, 1);
+}
+
+
 
   printf("\n---- Time for each segment ----\n\n");
 
