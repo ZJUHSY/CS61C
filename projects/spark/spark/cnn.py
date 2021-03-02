@@ -128,6 +128,32 @@ class CNNClassifier(Classifier):
       ("A1", self.A1), ("b1", self.b1)] 
 
   def forward(self, data):
+    A1 = self.A1
+    b1 = self.b1
+    S1 = self.S1
+    P1 = self.P1
+
+    F3 = self.F3
+    S3 = self.S3
+
+    A4 = self.A4
+    b4 = self.b4
+    S4 = self.S4
+    P4 = self.P4
+
+    F6 = self.F6
+    S6 = self.S6
+
+    A7 = self.A7
+    b7 = self.b7
+    S7 = self.S7
+    P7 = self.P7
+
+    F9 = self.F9
+    S9 = self.S9
+
+    A10 = self.A10
+    b10 = self.b10
     """
     INPUT:
       - data: RDD[(key, (images, labels)) pairs]
@@ -136,26 +162,33 @@ class CNNClassifier(Classifier):
     """
 
     """ TODO: Layer1: Conv (32 x 32 x 16) forward """
+    L1 = data.map(lambda (k, (x,y)) : (k, (x, [conv_forward(x, A1, b1, S1, P1)], y)))
 
     """ TODO: Layer2: ReLU (32 x 32 x 16) forward """
-
+    L2 = L1.map(lambda (k, (x, l ,y)) : (k, (x, l + [ReLU_forward(l[0][0])], y)))
+    
     """ DOTO: Layer3: Pool (16 x 16 x 16) forward """
+    L3 = L2.map(lambda (k, (x, l,y)) : (k, (x, l + [max_pool_forward(l[1], F3, S3)], y)))
 
     """ TODO: Layer4: Conv (16 x 16 x 20) forward """ 
-
+    L4 = L3.map(lambda (k, (x, l,y)) : (k, (x, l + [conv_forward(l[2][0], A4, b4, S4, P4)], y)))
     """ TODO: Layer5: ReLU (16 x 16 x 20) forward """
+    L5 = L4.map(lambda (k, (x, l,y)) : (k, (x, l + [ReLU_forward(l[3][0])], y)))
 
     """ TODO: Layer6: Pool (8 x 8 x 20) forward """ 
-
+    L6 = L5.map(lambda (k, (x, l,y)) : (k, (x, l + [max_pool_forward(l[4], F6, S6)] ,y)))
     """ TODO: Layer7: Conv (8 x 8 x 20) forward """ 
+    L7 = L6.map(lambda (k, (x, l,y)) : (k, (x, l + [conv_forward(l[5][0], A7, b7, S7, P7)] ,y)))
 
     """ TODO: Layer8: ReLU (8 x 8 x 20) forward """ 
-
+    L8 = L7.map(lambda (k, (x, l,y)) : (k, (x, l + [ReLU_forward(l[6][0])] ,y)))
     """ TODO: Layer9: Pool (4 x 4 x 20) forward """ 
+    L9 = L8.map(lambda (k, (x, l,y)) : (k, (x, l + [max_pool_forward(l[7], F9, S9)] ,y)))
 
     """ TODO: Layer10: FC (1 x 1 x 10) forward """
+    L10 = L9.map(lambda (k, (x, l,y)) : (k, (x, l + [linear_forward(l[8][0], A10, b10)] ,y)))
 
-    return data.map(lambda (k, (x, y)): (k, (x, [(np.array([0]), np.array([0])), np.zeros((x.shape[0], 2))], y))) # replace it with your code
+    return L10
 
   def backward(self, data, count):
     """
@@ -164,39 +197,104 @@ class CNNClassifier(Classifier):
     OUTPUT:
       - Loss
     """
+    A1 = self.A1
+    b1 = self.b1
+    S1 = self.S1
+    P1 = self.P1
+
+    F3 = self.F3
+    S3 = self.S3
+
+    A4 = self.A4
+    b4 = self.b4
+    S4 = self.S4
+    P4 = self.P4
+
+    F6 = self.F6
+    S6 = self.S6
+
+    A7 = self.A7
+    b7 = self.b7
+    S7 = self.S7
+    P7 = self.P7
+
+    F9 = self.F9
+    S9 = self.S9
+
+    A10 = self.A10
+    b10 = self.b10
+    
+    #pack values
+    layers = data.map(lambda (x,l,y) : l)
+    layer1 = layers.map(lambda l : l[0][0])
+    X_col1 = layers.map(lambda l : l[0][1])
+    layer2 = layers.map(lambda l : l[1])
+    layer3 = layers.map(lambda l : l[2][0])
+    X_idx3 = layers.map(lambda l : l[2][1])
+    layer4 = layers.map(lambda l : l[3][0])
+    X_col4 = layers.map(lambda l : l[3][1])
+    layer5 = layers.map(lambda l : l[4])
+    layer6 = layers.map(lambda l : l[5][0])
+    X_idx6 = layers.map(lambda l : l[5][1])
+    layer7 = layers.map(lambda l : l[6][0])
+    X_col7 = layers.map(lambda l : l[6][1])
+    layer8 = layers.map(lambda l : l[7])
+    layer9 = layers.map(lambda l : l[8][0])
+    X_idx9 = layers.map(lambda l : l[8][1])
+    layer10 = layers.map(lambda l : l[9])
+
+    Y = data.map(lambda (x, l, y) : y)
+    X = data.map(lambda (x, l, y) : x)
 
     """ TODO: Softmax Loss Layer """ 
+    softmax_back = layer10.zip(Y).map(lambda (l10, Y) : softmax_loss(l10, Y)) 
+    L = softmax_back.map(lambda (L, dLdl10) : L).reduce(lambda a,b : a+b)
+    dLdl10 = softmax_back.map(lambda (L, dLdl10) : dLdl10)
  
     """ TODO: Layer10: FC (1 x 1 x 10) Backward """
+    l10_back = dLdl10.zip(layer9).map(lambda (dLdl10, l9) : linear_backward(dLdl10, l9, A10))
+    dLdl9 = l10_back.map(lambda (dLdl9, dLdA10, dLdb10) : dLdl9)
+    dLdA10 = l10_back.map(lambda (dLdl9, dLdA10, dLdb10) : dLdA10).reduce(lambda a,b : a+b)
+    dLdb10 = l10_back.map(lambda (dLdl9, dLdA10, dLdb10) : dLdb10).reduce(lambda a,b : a+b)
 
     """ TODO: Layer9: Pool (4 x 4 x 20) Backward """
+    # dLdl9, dLdA10, dLdb10 = layer
+    dLdl8 = dLdl9.zip(layer8).zip(X_idx9).map(lambda ((dLdl9, layer8), X_idx9) : max_pool_backward(dLdl9, layer8, X_idx9, F9, S9))
 
     """ TODO: Layer8: ReLU (8 x 8 x 20) Backward """
+    dLdl7 = dLdl8.zip(layer7).map(lambda (dLdl8, layer7) : ReLU_backward(dLdl8, layer7))
 
     """ TODO: Layer7: Conv (8 x 8 x 20) Backward """
+    l7_back = dLdl7.zip(layer6).zip(X_col7).map(lambda ((dLdl7, layer6), X_col7) : conv_backward(dLdl7, layer6, X_col7, A7, S7, P7))
+    dLdl6 = l7_back.map(lambda (dLdl6, dLdA7, dLdb7) : dLdl6)
+    dLdA7 = l7_back.map(lambda (dLdl6, dLdA7, dLdb7) : dLdA7).reduce(lambda a,b : a+b)
+    dLdb7 = l7_back.map(lambda (dLdl6, dLdA7, dLdb7) : dLdb7).reduce(lambda a,b : a+b)
 
     """ TODO: Layer6: Pool (8 x 8 x 20) Backward """
-
+    dLdl5 = dLdl6.zip(layer5).zip(X_idx6).map(lambda ((dLdl6, layer5), X_idx6) : max_pool_backward(dLdl6, layer5, X_idx6, F6, S6))
+    
     """ TODO: Layer5: ReLU (16 x 16 x 20) Backward """ 
+    dLdl4 = dLdl5.zip(layer4).map(lambda (dLdl5, layer4) : ReLU_backward(dLdl5, layer4))
 
     """ TODO: Layer4: Conv (16 x 16 x 20) Backward """ 
- 
-    """ TODO: Layer3: Pool (16 x 16 x 16) Backward """ 
- 
-    """ TODO: Layer2: ReLU (32 x 32 x 16) Backward """
+    l4_back = dLdl4.zip(layer3).zip(X_col4).map(lambda ((dLdl4, layer3), X_col4) : conv_backward(dLdl4, layer3, X_col4, A4, S4, P4))
+    dLdl3 = l4_back.map(lambda (dLdl3, dLdA4, dLdb4) : dLdl3)
+    dLdA4 = l4_back.map(lambda (dLdl3, dLdA4, dLdb4) : dLdA4).reduce(lambda a,b : a+b)
+    dLdb4 = l4_back.map(lambda (dLdl3, dLdA4, dLdb4) : dLdb4).reduce(lambda a,b : a+b)
 
+    """ TODO: Layer3: Pool (16 x 16 x 16) Backward """ 
+    dLdl2 = dLdl3.zip(layer2).zip(X_idx3).map(lambda ((dLdl3, layer2), X_idx3) :  max_pool_backward(dLdl3, layer2, X_idx3, F3, S3))
+   
+    """ TODO: Layer2: ReLU (32 x 32 x 16) Backward """
+    dLdl1 = dLdl2.zip(layer1).map(lambda (dLdl2, layer1) : ReLU_backward(dLdl2, layer1))
+     
     """ TODO: Layer1: Conv (32 x 32 x 16) Backward """ 
+    l1_back = dLdl1.zip(X).zip(X_col1).map(lambda ((dLdl1, X), X_col1) :  conv_backward(dLdl1, X, X_col1, A1, S1, P1))
+    dLdX = l1_back.map(lambda (dLdX, dLdA1, dLdb1) : dLdX)
+    dLdA1 = l1_back.map(lambda (dLdX, dLdA1, dLdb1) : dLdA1).reduce(lambda a,b : a+b)
+    dLdb1 = l1_back.map(lambda (dLdX, dLdA1, dLdb1) : dLdb1).reduce(lambda a,b : a+b)
 
     """ TODO: reduce gradients """
-    L = 0.0
-    dLdA10 = np.zeros(self.A10.shape)
-    dLdb10 = np.zeros(self.b10.shape)
-    dLdA7 = np.zeros(self.A7.shape)
-    dLdb7 = np.zeros(self.b7.shape)
-    dLdA4 = np.zeros(self.A4.shape)
-    dLdb4 = np.zeros(self.b4.shape)
-    dLdA1 = np.zeros(self.A1.shape)
-    dLdb1 = np.zeros(self.b1.shape)
 
     """ gradient scaling """
     L /= float(count)

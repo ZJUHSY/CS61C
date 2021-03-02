@@ -1,4 +1,5 @@
 import numpy as np
+# from numpy.core import _ufunc_reduce
 import cPickle as pickle
 from classifier import Classifier
 from util.layers import *
@@ -53,6 +54,7 @@ class NNClassifier(Classifier):
     return [("A1", self.A1), ("b1", self.b1), ("A3", self.A3), ("b3", self.b3)]
 
   def forward(self, data):
+
     """
     INPUT:
       - data: RDD[(key, (images, labels)) pairs]
@@ -65,7 +67,23 @@ class NNClassifier(Classifier):
     Layer 2 : ReLU
     Layer 3 : linear
     """
-    return data.map(lambda (k, (x, y)): (k, (x, [np.zeros((x.shape[0], 2))], y))) # replace it with your code
+    A1 = self.A1
+    b1 = self.b1
+    A3 = self.A3
+    b3 = self.b3
+
+    def flat_map( (k,(x,y))):
+      res = []
+      for i in range(x.shape[0]):
+        res.append((k, (x, x[i:(i+1), :, :, :], y)))
+      return res
+
+    # layer1 = data.flatMap(flat_map).map(lambda (k, (x, x_row, y)) : (k, (x, [linear_forward(x_row, A1, b1)], y)))
+    layer1 = data.map(lambda (k, (x, y)) : (k, (x, [linear_forward(x, A1, b1)], y)))
+    layer1 = layer1.map(lambda (k, (x, l, y)) : (k, (x, l + [ReLU_forward(l[-1])], y)))
+    layer1 = layer1.map(lambda (k, (x, l, y)) : (k, (x, l + [linear_forward(l[-1], A3, b3)], y)))
+    return layer1
+
 
   def backward(self, data, count):
     """
@@ -77,19 +95,28 @@ class NNClassifier(Classifier):
     """ 
     TODO: Implement softmax loss layer 
     """
-
+    A1, b1 = self.A1, self.b1
+    A3, b3 = self.A3, self.b3
+    softmax = data.map(lambda (x, l, y) : (x, softmax_loss(l[-1], y)))
+    
+    l1 = data.map(lambda (x, l, y) : l[0])
+    l2 = data.map(lambda (x, l, y) : l[1])
+    l3 = data.map(lambda (x, l, y) : l[2])    
+    L = softmax.map(lambda (x, (L, df)) : L).reduce(lambda a, b : a + b)
     """ Todo: Implement backpropagation for Layer 3 """
-
+    l3_back = l2.zip(softmax.map(lambda (x, (L, dLdl3)) : dLdl3)).map(lambda (l2, dLdl3) : linear_backward(dLdl3, l2, A3))
+    
     """ Todo: Implement backpropagation for Layer 2 """
-   
+    l2_back = l1.zip(l3_back.map(lambda (dLdl2, dLdA3, dLdb3) : dLdl2)).map(lambda (l1, dLdl2) : ReLU_backward(dLdl2, l1))
     """ Todo: Implmenet backpropagation for Layer 1 """
+    l1_back = softmax.map(lambda (x, (L, dLdl3)) : x).zip(l2_back).map(lambda (x, dLdl1) : linear_backward(dLdl1, x, A1))
+    
 
     """ Todo: Reduce gradients """
-    L = 0.0
-    dLdA3 = np.zeros(self.A3.shape)
-    dLdb3 = np.zeros(self.b3.shape)
-    dLdA1 = np.zeros(self.A1.shape)
-    dLdb1 = np.zeros(self.b1.shape)
+    dLdA3 = l3_back.map(lambda (dLdl2, dLdA3, dLdb3) : dLdA3).reduce(lambda a,b : a+b)
+    dLdb3 = l3_back.map(lambda (dLdl2, dLdA3, dLdb3) : dLdb3).reduce(lambda a,b : a+b)
+    dLdA1 = l1_back.map(lambda (dLdX, dLdA1, dLdb1) : dLdA1).reduce(lambda a,b : a+b)
+    dLdb1 = l1_back.map(lambda (dLdX, dLdA1, dLdb1) : dLdb1).reduce(lambda a,b : a+b)
 
     """ gradient scaling """
     L /= float(count)

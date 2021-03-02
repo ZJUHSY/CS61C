@@ -11,7 +11,7 @@ class Log(object):
 
 """ Helper function to load images """
 def load_images():
-  dirpath = '/home/ff/cs61c/proj3/cifar-10-batches-py/'
+  dirpath = '/home/dlwlrma/win10/Desktop/cs61c_hsy/data/proj4/data/cifar-10-batches-py/'
   print '[CS61C Project 4] load images'
 
   """ read classes """
